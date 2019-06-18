@@ -1,0 +1,13 @@
+version: '3.2'
+
+services:
+  backend:
+    image: node:12.4.0-alpine
+    ports:
+      - "3000:3000"
+    expose:
+      - "3000"
+    volumes:
+      - ./api:/api
+    working_dir: /api
+    command: npm run start
