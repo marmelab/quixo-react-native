@@ -10,8 +10,8 @@ api-install:
 		api npm install
 
 install:
+	cp -n api/.env.dist api/.env
 	$(MAKE) api-install
-	cp -n .env.dist .env
 
 start: ## Start the server
 	docker-compose up -d
