@@ -1,7 +1,7 @@
-version: '3.2'
+version: "3.2"
 
 services:
-  backend:
+  api:
     image: node:12.4.0-alpine
     ports:
       - "3000:3000"
@@ -9,5 +9,16 @@ services:
       - "3000"
     volumes:
       - ./api:/api
+    depends_on:
+      - postgres
+    env_file: ./api/.env
     working_dir: /api
     command: npm run start
+  postgres:
+    image: postgres:11
+    environment:
+      - POSTGRES_USER=quixo
+      - POSTGRES_PASSWORD=quixo
+      - POSTGRES_DB=quixo
+    ports:
+      - "5432:5432"
