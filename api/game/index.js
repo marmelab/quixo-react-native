@@ -11,4 +11,4 @@ const newGame = (rows = 5, cols = 5) => ({
   currentPlayer: CROSS_PLAYER,
 });
 
-module.exports = { newGame };
+module.exports = { getEmptyBoard, newGame };

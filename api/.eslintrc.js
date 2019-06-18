@@ -3,6 +3,7 @@ module.exports = {
     browser: true,
     commonjs: true,
     es6: true,
+    jest: true,
   },
   extends: 'airbnb-base',
   globals: {
@@ -15,4 +16,5 @@ module.exports = {
   rules: {
     'max-len': [2, 120, 4, { ignoreUrls: true }],
   },
+  plugins: ['jest'],
 };
