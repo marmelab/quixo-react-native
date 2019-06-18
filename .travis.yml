@@ -1,0 +1,15 @@
+# https://travis-ci.com/marmelab/quixo-react/
+
+language: node
+
+services:
+  - docker
+
+install:
+  - make install
+
+script: make test
+
+branches:
+  only:
+    - master
