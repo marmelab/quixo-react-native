@@ -1,7 +1,7 @@
 {
   "name": "quixo-node-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Quixo game with node api & react-native app",
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
