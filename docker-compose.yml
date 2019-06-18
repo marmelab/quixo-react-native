@@ -1,13 +1,29 @@
 version: '3.2'
 
 services:
-  backend:
-    image: node:12.4.0-alpine
+  postgres:
+    build: docker/postgres
+    environment:
+      - POSTGRES_USER=quixo
+      - POSTGRES_PASSWORD=quixo
+      - POSTGRES_DB=quixo
+    ports:
+      - "5433:5432"
+    expose:
+      - "5433"
+  api:
+    image: node:12.4.0-stretch
     ports:
       - "3000:3000"
     expose:
       - "3000"
     volumes:
       - ./api:/api
+      - ./docker/wait-for-it.sh:/docker/wait-for-it.sh
+    depends_on:
+      - postgres
+    env_file: ./api/.env
     working_dir: /api
-    command: npm run start
+    command:
+      ["/docker/wait-for-it.sh", "postgres:5433", "--", "npm", "run", "start"]
+    restart: always
