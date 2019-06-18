@@ -1,6 +1,7 @@
 {
   "name": "quixo-node-api",
   "version": "1.0.0",
+  "author": "Pierre",
   "description": "Quixo game with node api & react-native app",
   "main": "index.js",
   "scripts": {
@@ -9,8 +10,7 @@
     "lint": "eslint",
     "init-db": "node scripts/initDb.js"
   },
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "express": "4.17.1",
     "pg": "7.11.0",
