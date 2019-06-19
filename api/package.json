@@ -5,20 +5,20 @@
   "description": "Quixo game with node api & react-native app",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "nodemon app.js",
     "test": "jest",
     "lint": "eslint"
   },
   "license": "MIT",
   "dependencies": {
     "express": "4.17.1",
-    "pg": "7.11.0",
-    "socket.io": "2.2.0"
+    "pg": "7.11.0"
   },
   "devDependencies": {
     "eslint": "5.16.0",
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-plugin-import": "2.17.3",
-    "jest": "24.8.0"
+    "jest": "24.8.0",
+    "nodemon": "1.19.1"
   }
 }

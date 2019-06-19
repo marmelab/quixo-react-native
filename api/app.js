@@ -1,15 +1,12 @@
-const app = require("express")();
-const http = require("http").createServer(app);
-const io = require("socket.io")(http);
+const express = require("express");
+const app = express();
 const { PORT } = require("./constants/api");
 const createNewGame = require("./app/createNewGame");
 
-const listenerSocketIO = socket => {
-  socket.on("new-game", () =>
-    createNewGame().then(game => socket.emit("new-game-reply", game))
-  );
-};
+app.get("/", (req, res) => res.send("Hello :)"));
+app.get("/new-game", async (req, res) => {
+  const newGame = await createNewGame();
+  res.send(newGame);
+});
 
-http.listen(PORT, () => {});
-
-io.on("connection", socket => listenerSocketIO(socket));
+app.listen(PORT, () => console.log(`App listnen on ${PORT}`));
