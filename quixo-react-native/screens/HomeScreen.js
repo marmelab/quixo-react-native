@@ -7,8 +7,9 @@ import {
   ImageBackground
 } from "react-native";
 
+const background = require("../assets/bg-quixojpg");
+
 const styles = StyleSheet.create({
-  container: {},
   background: {
     width: "100%",
     height: "100%",
@@ -31,10 +32,7 @@ const styles = StyleSheet.create({
 const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={require("../assets/bg-quixo.jpg")}
-        style={styles.background}
-      >
+      <ImageBackground source={background} style={styles.background}>
         <TouchableOpacity
           onPress={() => navigation.navigate("Game")}
           style={styles.playButton}

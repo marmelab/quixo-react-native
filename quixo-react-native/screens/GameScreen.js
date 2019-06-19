@@ -18,16 +18,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const getBoard = board =>
-  board.map((row, rowIndex) => {
-    const cubes = row.map((cube, colIndex) => <Cube key={colIndex} />);
-    return (
-      <View key={rowIndex} style={styles.row}>
-        {cubes}
-      </View>
-    );
-  });
-
 const fetchGame = (id, dispatch) => () => {
   const fetchNewGame = async () => {
     const payload = await getNewGame();
@@ -43,7 +33,18 @@ const GameScreen = ({ navigation }) => {
   const id = navigation.getParam("id", null) || game.id;
   useEffect(fetchGame(id, dispatch), []);
 
-  return <View style={styles.board}>{getBoard(game.board)}</View>;
+  return (
+    <View style={styles.board}>
+      {game.board.map((row, rowIndex) => {
+        const cubes = row.map((cube, colIndex) => <Cube key={colIndex} />);
+        return (
+          <View key={rowIndex} style={styles.row}>
+            {cubes}
+          </View>
+        );
+      })}
+    </View>
+  );
 };
 
 export default GameScreen;
