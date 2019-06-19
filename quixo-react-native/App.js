@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,24 +6,7 @@ import {
   TouchableOpacity,
   ImageBackground
 } from "react-native";
-
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={require("./assets/bg-quixo.jpg")}
-        style={styles.background}
-      >
-        <TouchableOpacity
-          onPress={() => console.log("ici")}
-          style={styles.playButton}
-        >
-          <Text style={styles.playText}>Play Quixo !</Text>
-        </TouchableOpacity>
-      </ImageBackground>
-    </View>
-  );
-}
+import { createStackNavigator, createAppContainer } from "react-navigation";
 
 const styles = StyleSheet.create({
   container: {},
@@ -38,8 +21,6 @@ const styles = StyleSheet.create({
     height: 60,
     backgroundColor: "#003366",
     borderRadius: 5,
-    borderWidth: 1,
-    borderColor: "#000",
     alignItems: "center",
     justifyContent: "center"
   },
@@ -47,3 +28,27 @@ const styles = StyleSheet.create({
     color: "#fff"
   }
 });
+
+const HomeScreen = () => {
+  return (
+    <View style={styles.container}>
+      <ImageBackground
+        source={require("./assets/bg-quixo.jpg")}
+        style={styles.background}
+      >
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate("game")}
+          style={styles.playButton}
+        >
+          <Text style={styles.playText}>Play Quixo !</Text>
+        </TouchableOpacity>
+      </ImageBackground>
+    </View>
+  );
+};
+
+const AppNavigator = createStackNavigator({
+  Home: HomeScreen
+});
+
+export default createAppContainer(AppNavigator);
