@@ -47,8 +47,18 @@ const HomeScreen = () => {
   );
 };
 
-const AppNavigator = createStackNavigator({
-  Home: HomeScreen
-});
+const AppNavigator = createStackNavigator(
+  {
+    Home: {
+      screen: HomeScreen
+    }
+  },
+  {
+    headerMode: "none",
+    navigationOptions: {
+      headerVisible: false
+    }
+  }
+);
 
 export default createAppContainer(AppNavigator);
