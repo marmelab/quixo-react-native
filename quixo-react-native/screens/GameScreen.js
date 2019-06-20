@@ -77,8 +77,8 @@ const GameScreen = ({ navigation }) => {
   useEffect(fetchMovables(id, dispatch), [game.currentPlayer]);
 
   const handlePressCube = game.selectedCube
-    ? moveCube(id, dispatch)
-    : selectCube(id, dispatch);
+    ? ({ x, y }) => moveCube(id, dispatch)({ x, y })
+    : ({ x, y }) => selectCube(id, dispatch)({ x, y });
   const isMovable = isInMovables(movables);
   const isSelected = isSelectedCube(game.selectedCube);
   return (
