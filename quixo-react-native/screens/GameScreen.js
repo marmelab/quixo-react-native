@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
 });
 
 const isInMovables = movables => ({ x, y }) =>
-  movables.filter(cube => cube.x === x && cube.y === y).length > 0;
+  movables.some(cube => cube.x === x && cube.y === y);
 
 const isSelectedCube = selectedCube => ({ x, y }) =>
   selectedCube && selectedCube.x === x && selectedCube.y === y;
@@ -55,6 +55,7 @@ const fetchMovables = (id, dispatch) => () => {
 };
 
 const selectCube = (id, dispatch) => ({ x, y }) => {
+  console.log("ici");
   const selectCubeCall = async () => {
     const payload = await postSelectCube({ id, x, y });
     dispatch({ type: SELECT_CUBE_REPLY, payload });
@@ -90,7 +91,7 @@ const GameScreen = ({ navigation }) => {
               key={`cube-${x}-${y}`}
               isMovable={isMovable({ x, y })}
               isSelected={isSelected({ x, y })}
-              pressCube={() => handlePressCube({ x, y })}
+              handlePress={() => handlePressCube({ x, y })}
               value={value}
             />
           ))}

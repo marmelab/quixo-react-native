@@ -32,12 +32,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default function Cube({
-  isMovable,
-  handlePressCube,
-  isSelected,
-  value
-}) {
+export default function Cube({ isMovable, handlePress, isSelected, value }) {
   const cubeStyle = isSelected
     ? { ...styles.cube, ...styles.selectedCube }
     : styles.cube;
@@ -50,7 +45,7 @@ export default function Cube({
     return (
       <TouchableOpacity
         style={{ ...styles.cube, ...styles.movable }}
-        onPress={handlePressCube}
+        onPress={handlePress}
       >
         {image}
       </TouchableOpacity>
