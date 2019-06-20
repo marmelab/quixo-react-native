@@ -1,12 +1,11 @@
 const express = require("express");
-const app = express();
+const bodyParser = require("body-parser");
 const { PORT } = require("./constants/api");
-const createNewGame = require("./app/createNewGame");
+const router = require("./router");
 
-app.get("/", (req, res) => res.send("Hello :)"));
-app.get("/new-game", async (req, res) => {
-  const newGame = await createNewGame();
-  res.send(newGame);
-});
+const app = express();
+app.use(bodyParser.json());
+
+router(app);
 
 app.listen(PORT, () => console.log(`App listnen on ${PORT}`));

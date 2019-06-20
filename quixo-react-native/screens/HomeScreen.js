@@ -7,7 +7,7 @@ import {
   ImageBackground
 } from "react-native";
 
-const background = require("../assets/bg-quixojpg");
+const background = require("../assets/bg-quixo.jpg");
 
 const styles = StyleSheet.create({
   background: {
