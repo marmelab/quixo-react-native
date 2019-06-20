@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#003366"
+    backgroundColor: "#4682B4"
   },
   row: {
     justifyContent: "center",
@@ -91,6 +91,7 @@ const GameScreen = ({ navigation }) => {
               isMovable={isMovable({ x, y })}
               isSelected={isSelected({ x, y })}
               pressCube={() => onCubePress({ x, y })}
+              value={value}
             />
           ))}
         </View>

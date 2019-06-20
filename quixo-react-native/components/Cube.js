@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleSheet, View, TouchableOpacity } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
+
+const CROSS_VALUE = 1;
+const CIRCLE_VALUE = -1;
+
+const circle = require("../assets/circle.png");
+const cross = require("../assets/cross.png");
 
 const styles = StyleSheet.create({
   cube: {
@@ -9,27 +15,41 @@ const styles = StyleSheet.create({
     margin: 8,
     aspectRatio: 1,
     borderRadius: 10,
-    borderWidth: 10
+    borderWidth: 5,
+    borderColor: "#CDCDCD",
+    justifyContent: "center",
+    alignItems: "center"
   },
   movable: {
-    borderColor: "green"
+    borderColor: "#006400"
   },
   selectedCube: {
-    borderColor: "white"
+    borderColor: "#8B008B"
+  },
+  image: {
+    width: "90%",
+    height: "90%"
   }
 });
 
-export default function Cube({ isMovable, pressCube, isSelected }) {
+export default function Cube({ isMovable, pressCube, isSelected, value }) {
   const cubeStyle = isSelected
     ? { ...styles.cube, ...styles.selectedCube }
     : styles.cube;
+
+  const logo = value === CIRCLE_VALUE ? circle : cross;
+  const image =
+    value !== 0 ? <Image source={logo} style={styles.image} /> : null;
+
   if (isMovable) {
     return (
       <TouchableOpacity
         style={{ ...styles.cube, ...styles.movable }}
         onPress={pressCube}
-      />
+      >
+        {image}
+      </TouchableOpacity>
     );
   }
-  return <View style={cubeStyle} />;
+  return <View style={cubeStyle}>{image}</View>;
 }
