@@ -19,16 +19,14 @@ const listen = app => {
   });
 
   app.post("/select-cube", async (req, res) => {
-    const id = req.body.id;
-    const selectedCube = { x: req.body.x, y: req.body.y };
+    const { id, ...selectedCube } = req.body;
     const newGame = await selectCube(id, selectedCube);
     const destinations = await getDestinations(id);
     res.send({ game: newGame, destinations });
   });
 
   app.post("/move-cube", async (req, res) => {
-    const id = req.body.id;
-    const destination = { x: req.body.x, y: req.body.y };
+    const { id, ...destination } = req.body;
     const newGame = await moveCube(id, destination);
     res.send(newGame);
   });

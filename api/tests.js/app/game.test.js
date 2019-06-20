@@ -7,10 +7,13 @@ describe("A play sequence", () => {
   it("should get movables, select cube and move cube", async () => {
     const game = await createNewGame();
     expect(game.id).not.toBe(undefined);
+
     const movables = await getMovables(game.id);
     expect(movables).toHaveLength(16);
+
     const gameWithCubeSelected = await selectCube(game.id, { x: 0, y: 0 });
     expect(gameWithCubeSelected.selectedCube).toEqual({ x: 0, y: 0 });
+
     const gameWithMovedCube = await moveCube(game.id, { x: 4, y: 0 });
     expect(gameWithMovedCube.selectedCube).toEqual(null);
     expect(gameWithMovedCube.board).not.toEqual(game.board);

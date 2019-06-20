@@ -14,6 +14,7 @@ describe("Game functions", () => {
       board.forEach(line => expect(line).toHaveLength(5));
     });
   });
+
   describe("getMovables", () => {
     it("should return all movables at the start of the game", () => {
       const game = newGame();
@@ -38,6 +39,7 @@ describe("Game functions", () => {
       const movables = getMovablesCubes(game);
       expect(movables).toEqual(expectedMovables);
     });
+
     it("should return one movable cube", () => {
       const game = newGame(5, 5, [
         [1, -1, -1, -1, -1],
@@ -64,6 +66,7 @@ describe("Game functions", () => {
       expect(destinations).toEqual(exepectedDestinations);
     });
   });
+
   describe("moveCube", () => {
     it("should move cube from column middle with shift on row", () => {
       const game = newGame(5, 5, [
@@ -92,6 +95,7 @@ describe("Game functions", () => {
 
       expect(board).toEqual(expectedBoard);
     });
+
     it("should move cube from row middle with shift on column", () => {
       const game = newGame(5, 5, [
         [0, 0, 0, 0, 0],
