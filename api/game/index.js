@@ -20,16 +20,16 @@ const getArrayOfCubes = ({ board }) =>
     board.map((row, x) => row.map((value, y) => ({ x, y, value })))
   );
 
-const isOutsideCube = ({ x, y, size }) =>
-  x === 0 || y === 0 || x === size - 1 || y === size - 1;
+const isOutsideCube = ({ x, y, boardSize }) =>
+  x === 0 || y === 0 || x === boardSize - 1 || y === boardSize - 1;
 
 const cubeBelongsToPlayer = ({ cubeValue, playerTeam }) =>
   cubeValue === NEUTRAL_CUBE || cubeValue === playerTeam;
 
-const getMovablesCubes = ({ board, rows: size, currentPlayer }) =>
+const getMovablesCubes = ({ board, rows: boardSize, currentPlayer }) =>
   getArrayOfCubes({ board }).filter(
     cube =>
-      isOutsideCube({ ...cube, size }) &&
+      isOutsideCube({ ...cube, boardSize }) &&
       cubeBelongsToPlayer({
         cubeValue: cube.value,
         playerTeam: currentPlayer
