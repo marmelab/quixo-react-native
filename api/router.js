@@ -12,8 +12,8 @@ const listen = app => {
     res.send(newGame);
   });
 
-  app.get("/movables", async (req, res) => {
-    const id = req.param("id");
+  app.get("/movables/:id", async (req, res) => {
+    const { id } = req.params;
     const movables = await getMovables(id);
     res.send(movables);
   });

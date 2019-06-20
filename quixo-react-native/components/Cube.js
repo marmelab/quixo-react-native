@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 
 const styles = StyleSheet.create({
   cube: {
@@ -10,9 +10,26 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     borderRadius: 10,
     borderWidth: 10
+  },
+  movable: {
+    borderColor: "green"
+  },
+  selectedCube: {
+    borderColor: "white"
   }
 });
 
-export default function Cube() {
-  return <View style={styles.cube} />;
+export default function Cube({ isMovable, pressCube, isSelected }) {
+  const cubeStyle = isSelected
+    ? { ...styles.cube, ...styles.selectedCube }
+    : styles.cube;
+  if (isMovable) {
+    return (
+      <TouchableOpacity
+        style={{ ...styles.cube, ...styles.movable }}
+        onPress={pressCube}
+      />
+    );
+  }
+  return <View style={cubeStyle} />;
 }
