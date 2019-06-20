@@ -1,4 +1,4 @@
-const lodash = require("lodash");
+const flatten = require("lodash/flatten");
 
 const CROSS_PLAYER = 1;
 const NEUTRAL_CUBE = 0;
@@ -16,9 +16,7 @@ const newGame = (rows = 5, cols = 5, board = getEmptyBoard(rows, cols)) => ({
 });
 
 const getArrayOfCubes = ({ board }) =>
-  lodash.flatten(
-    board.map((row, x) => row.map((value, y) => ({ x, y, value })))
-  );
+  flatten(board.map((row, x) => row.map((value, y) => ({ x, y, value }))));
 
 const isOutsideCube = ({ x, y, boardSize }) =>
   x === 0 || y === 0 || x === boardSize - 1 || y === boardSize - 1;
