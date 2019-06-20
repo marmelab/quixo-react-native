@@ -36,42 +36,55 @@ const getMovablesCubes = ({ board, rows: size, currentPlayer }) =>
       })
   );
 
-const getAvailablesDestinations = ({ selectedCube, rows: size }) => {
+const isOnStart = index => index === 0;
+const isOnEnd = (index, boardSize) => index === boardSize - 1;
+const isOnEdge = (index, boardSize) =>
+  isOnStart(index) || isOnEnd(index, boardSize);
+
+const getDestinationsForTopOrBottomCube = ({ x, y, boardSize }) => {
+  destinations = [];
+  const indexStart = 0;
+  const indexEnd = boardSize - 1;
+  if (!isOnStart(y)) {
+    destinations.push({ x, y: indexStart });
+  }
+  if (!isOnEnd(y)) {
+    destinations.push({ x, y: indexEnd });
+  }
+  if (isOnStart(x)) {
+    destinations.push({ x: indexEnd, y });
+  } else {
+    destinations.push({ x: indexStart, y });
+  }
+  return destinations;
+};
+
+const getDestinationsForLeftOrRightCube = ({ x, y, boardSize }) => {
+  destinations = [];
+  const indexStart = 0;
+  const indexEnd = boardSize - 1;
+  if (!isOnStart(x)) {
+    destinations.push({ x: indexStart, y });
+  }
+  if (!isOnEnd(x)) {
+    destinations.push({ x: indexEnd, y });
+  }
+  if (isOnStart(y)) {
+    destinations.push({ x, y: indexEnd });
+  } else {
+    destinations.push({ x, y: indexStart });
+  }
+  return destinations;
+};
+const getAvailablesDestinations = ({ selectedCube, rows: boardSize }) => {
   const destinations = [];
   const { x, y } = selectedCube;
-  const isOnStart = index => index === 0;
-  const isOnEnd = index => index === size - 1;
-  const isOnEdge = index => isOnStart(index) || isOnEnd(index);
-  const indexStart = 0;
-  const indexEnd = size - 1;
-  // If on the top or the bottom of the board, else it's on the left or right
+
   if (isOnEdge(x)) {
-    // If not on the left of the board, we can move it to the left
-    if (!isOnStart(y)) {
-      destinations.push({ x, y: indexStart });
-    }
-    // If not on the right of the board, we can move it to the right
-    if (!isOnEnd(y)) {
-      destinations.push({ x, y: indexEnd });
-    }
-    // If on the top of the board, we can move it to the bottom, else to the top
-    if (isOnStart(x)) {
-      destinations.push({ x: indexEnd, y });
-    } else {
-      destinations.push({ x: indexStart, y });
-    }
-  } else if (isOnEdge(y)) {
-    if (!isOnStart(x)) {
-      destinations.push({ x: indexStart, y });
-    }
-    if (!isOnEnd(x)) {
-      destinations.push({ x: indexEnd, y });
-    }
-    if (isOnStart(y)) {
-      destinations.push({ x, y: indexEnd });
-    } else {
-      destinations.push({ x, y: indexStart });
-    }
+    return getDestinationsForTopOrBottomCube({ x, y, boardSize });
+  }
+  if (isOnEdge(y)) {
+    return getDestinationsForLeftOrRightCube({ x, y, boardSize });
   }
   return destinations;
 };
