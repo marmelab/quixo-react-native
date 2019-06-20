@@ -76,7 +76,7 @@ const GameScreen = ({ navigation }) => {
   useEffect(fetchGame(id, dispatch), []);
   useEffect(fetchMovables(id, dispatch), [game.currentPlayer]);
 
-  const onCubePress = game.selectedCube
+  const handlePressCube = game.selectedCube
     ? moveCube(id, dispatch)
     : selectCube(id, dispatch);
   const isMovable = isInMovables(movables);
@@ -90,7 +90,7 @@ const GameScreen = ({ navigation }) => {
               key={`cube-${x}-${y}`}
               isMovable={isMovable({ x, y })}
               isSelected={isSelected({ x, y })}
-              pressCube={() => onCubePress({ x, y })}
+              pressCube={() => handlePressCube({ x, y })}
               value={value}
             />
           ))}

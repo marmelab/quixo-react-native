@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   movable: {
-    borderColor: "#006400"
+    borderColor: "#00FF7F"
   },
   selectedCube: {
     borderColor: "#8B008B"
@@ -32,7 +32,12 @@ const styles = StyleSheet.create({
   }
 });
 
-export default function Cube({ isMovable, pressCube, isSelected, value }) {
+export default function Cube({
+  isMovable,
+  handlePressCube,
+  isSelected,
+  value
+}) {
   const cubeStyle = isSelected
     ? { ...styles.cube, ...styles.selectedCube }
     : styles.cube;
@@ -45,7 +50,7 @@ export default function Cube({ isMovable, pressCube, isSelected, value }) {
     return (
       <TouchableOpacity
         style={{ ...styles.cube, ...styles.movable }}
-        onPress={pressCube}
+        onPress={handlePressCube}
       >
         {image}
       </TouchableOpacity>
