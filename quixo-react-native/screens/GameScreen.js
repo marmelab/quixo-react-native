@@ -55,7 +55,6 @@ const fetchMovables = (id, dispatch) => () => {
 };
 
 const selectCube = (id, dispatch) => ({ x, y }) => {
-  console.log("ici");
   const selectCubeCall = async () => {
     const payload = await postSelectCube({ id, x, y });
     dispatch({ type: SELECT_CUBE_REPLY, payload });
