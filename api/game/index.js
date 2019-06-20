@@ -34,7 +34,7 @@ const getMovablesCubes = ({ board, rows: size, currentPlayer }) =>
       })
   );
 
-const getAvailablesDestinations = ({ board, selectedCube, rows: size }) => {
+const getAvailablesDestinations = ({ selectedCube, rows: size }) => {
   const destinations = [];
   const { x, y } = selectedCube;
   const isOnStart = index => index === 0;
@@ -111,6 +111,8 @@ const shiftLine = ({ board, yStart, yEnd, rowIndex, player }) => {
   return newBoard;
 };
 
+const getNextPlayer = player => player * -1;
+
 const flipRowsAndCols = board =>
   board[0].map((col, i) => board.map(row => row[i]));
 
@@ -127,5 +129,6 @@ module.exports = {
   moveCube,
   shiftLine,
   flipRowsAndCols,
-  copyBoard
+  copyBoard,
+  getNextPlayer
 };
