@@ -33,3 +33,8 @@ export const postMoveCube = async ({ id, x, y }) => {
   });
   return await response.json();
 };
+
+export const getMyTeam = async id => {
+  const response = await fetch(`${API_HOST}/assign-me-team/${id}`);
+  return await response.json();
+};

@@ -1,4 +1,11 @@
-import { UPDATE_GAME, FETCH_MOVABLES, SELECT_CUBE_REPLY } from "./constants";
+import {
+  UPDATE_GAME,
+  FETCH_MOVABLES,
+  SELECT_CUBE_REPLY,
+  CREATE_GAME,
+  FETCH_TEAM_REPLY
+} from "./constants";
+import { NEUTRAL_VALUE } from "../constants/game";
 
 export const initialState = {
   game: {
@@ -12,11 +19,14 @@ export const initialState = {
     player1: null,
     player2: null
   },
-  movables: []
+  movables: [],
+  myTeam: NEUTRAL_VALUE
 };
 
 export const reducer = (state, action) => {
   switch (action.type) {
+    case CREATE_GAME:
+      return { ...state, game: action.payload };
     case UPDATE_GAME:
       return { ...state, game: action.payload };
     case FETCH_MOVABLES:
@@ -24,6 +34,9 @@ export const reducer = (state, action) => {
     case SELECT_CUBE_REPLY:
       const { game, destinations: movables } = action.payload;
       return { ...state, game, movables };
+    case FETCH_TEAM_REPLY:
+      const { team } = action.payload;
+      return { ...state, myTeam: team };
     default:
       return state;
   }

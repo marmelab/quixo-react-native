@@ -1,8 +1,7 @@
 import React from "react";
 import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
 
-const CROSS_VALUE = 1;
-const CIRCLE_VALUE = -1;
+import { CIRCLE_VALUE, NEUTRAL_VALUE } from "../constants/game";
 
 const circle = require("../assets/circle.png");
 const cross = require("../assets/cross.png");
@@ -39,7 +38,9 @@ export default function Cube({ isMovable, handlePress, isSelected, value }) {
 
   const logo = value === CIRCLE_VALUE ? circle : cross;
   const image =
-    value !== 0 ? <Image source={logo} style={styles.image} /> : null;
+    value !== NEUTRAL_VALUE ? (
+      <Image source={logo} style={styles.image} />
+    ) : null;
 
   if (isMovable) {
     return (
