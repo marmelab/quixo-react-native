@@ -1,4 +1,4 @@
-version: '3.2'
+version: "3.2"
 
 services:
   postgres:
@@ -27,3 +27,12 @@ services:
     command:
       ["/docker/wait-for-it.sh", "postgres:5433", "--", "npm", "run", "start"]
     restart: always
+  advisor:
+    build: docker/go
+    volumes:
+      - ./advisor-go/src:/go/src
+    ports:
+      - "8001:8001"
+    expose:
+      - "8001"
+    command: CompileDaemon -directory="./src/quixo/" -command="./src/quixo/quixo"

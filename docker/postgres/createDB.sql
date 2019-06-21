@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS game (
     player1 integer,
     player2 integer,
     winner integer,
-    winning_line json
+    winning_line json,
+    solo boolean
 );
 
 ALTER TABLE game OWNER TO quixo;

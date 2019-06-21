@@ -5,12 +5,18 @@ const moveCube = require("./app/moveCube");
 const getMovables = require("./app/getMovables");
 const getDestinations = require("./app/getDestinations");
 const assignTeam = require("./app/assignTeam");
+const createNewGameVsAi = require("./createNewGameVsAi");
 
 const listen = app => {
   app.get("/", (req, res) => res.send("Hello :)"));
 
   app.get("/new-game", async (req, res) => {
     const newGame = await createNewGame();
+    res.send(newGame);
+  });
+
+  app.get("/new-game-ai", async (req, res) => {
+    const newGame = await createNewGameVsAi();
     res.send(newGame);
   });
 
