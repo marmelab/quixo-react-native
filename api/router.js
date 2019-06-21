@@ -3,6 +3,7 @@ const selectCube = require("./app/selectCube");
 const moveCube = require("./app/moveCube");
 const getMovables = require("./app/getMovables");
 const getDestinations = require("./app/getDestinations");
+const assignTeam = require("./app/assignTeam");
 
 const listen = app => {
   app.get("/", (req, res) => res.send("Hello :)"));
@@ -29,6 +30,12 @@ const listen = app => {
     const { id, ...destination } = req.body;
     const newGame = await moveCube(id, destination);
     res.send(newGame);
+  });
+
+  app.get("/assign-me-team/:id", async (req, res) => {
+    const { id } = req.params;
+    const team = await assignTeam(id);
+    res.send(team);
   });
 };
 

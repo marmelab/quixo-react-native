@@ -37,4 +37,27 @@ const updateBoardAndPlayer = (id, board, player) =>
     })
     .then(res => toEntity(res.rows[0]));
 
-module.exports = { get, save, updateSelectedCube, updateBoardAndPlayer };
+const updatePlayer1 = (id, team) =>
+  db
+    .query({
+      text: `UPDATE ${TABLE_NAME} SET player1 = $1 WHERE id = $2 RETURNING player1`,
+      values: [team, id]
+    })
+    .then(res => res.rows[0].player1);
+
+const updatePlayer2 = (id, team) =>
+  db
+    .query({
+      text: `UPDATE ${TABLE_NAME} SET player2 = $1 WHERE id = $2 RETURNING player2`,
+      values: [team, id]
+    })
+    .then(res => res.rows[0].player2);
+
+module.exports = {
+  get,
+  save,
+  updateSelectedCube,
+  updateBoardAndPlayer,
+  updatePlayer1,
+  updatePlayer2
+};

@@ -77,11 +77,10 @@ const getDestinationsForLeftOrRightCube = ({ x, y, boardSize }) => {
 const getAvailablesDestinations = ({ selectedCube, rows: boardSize }) => {
   const destinations = [];
   const { x, y } = selectedCube;
-
-  if (isOnEdge(x)) {
+  if (isOnEdge(x, boardSize)) {
     return getDestinationsForTopOrBottomCube({ x, y, boardSize });
   }
-  if (isOnEdge(y)) {
+  if (isOnEdge(y, boardSize)) {
     return getDestinationsForLeftOrRightCube({ x, y, boardSize });
   }
   return destinations;
