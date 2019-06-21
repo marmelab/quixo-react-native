@@ -23,6 +23,9 @@ const toEntity = game =>
     if (key === "selected_cube") {
       newKey = "selectedCube";
     }
+    if (key === "winning_line") {
+      newKey = "winningLine";
+    }
     return { ...newGame, [newKey]: game[key] };
   }, {});
 

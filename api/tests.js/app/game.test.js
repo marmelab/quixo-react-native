@@ -19,4 +19,33 @@ describe("A play sequence", () => {
     expect(gameWithMovedCube.board).not.toEqual(game.board);
     expect(gameWithMovedCube.currentPlayer).not.toEqual(game.currentPlayer);
   });
+  it("should get movables, select cube, move cube until win the game", async () => {
+    const game = await createNewGame([
+      [1, 1, 1, 1, 0],
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0]
+    ]);
+    expect(game.id).not.toBe(undefined);
+
+    const movables = await getMovables(game.id);
+    expect(movables).toHaveLength(16);
+
+    const gameWithCubeSelected = await selectCube(game.id, { x: 4, y: 4 });
+    expect(gameWithCubeSelected.selectedCube).toEqual({ x: 4, y: 4 });
+
+    const gameWithMovedCube = await moveCube(game.id, { x: 0, y: 4 });
+
+    const expectedWinner = 1;
+    const exepctedWinningLine = [
+      { x: 0, y: 0 },
+      { x: 0, y: 1 },
+      { x: 0, y: 2 },
+      { x: 0, y: 3 },
+      { x: 0, y: 4 }
+    ];
+    expect(gameWithMovedCube.winner).toEqual(expectedWinner);
+    expect(gameWithMovedCube.winningLine).toEqual(exepctedWinningLine);
+  });
 });

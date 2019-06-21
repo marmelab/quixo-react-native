@@ -13,11 +13,12 @@ export const initialState = {
     board: [],
     rows: null,
     cols: null,
-    winner: null,
     currentPlayer: null,
     selectedCube: null,
     player1: null,
-    player2: null
+    player2: null,
+    winner: null,
+    winningLine: []
   },
   movables: [],
   myTeam: NEUTRAL_VALUE

@@ -7,6 +7,7 @@
   "scripts": {
     "start": "nodemon app.js",
     "test": "jest",
+    "test-watch": "jest --watchAll",
     "lint": "eslint"
   },
   "license": "MIT",

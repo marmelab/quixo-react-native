@@ -23,5 +23,10 @@ test-api:
 	docker-compose run --rm \
 		api npm run test
 
+test-api-watch:
+	docker-compose run --rm \
+		api npm run test-watch
+
+
 test:
 	$(MAKE) test-api
