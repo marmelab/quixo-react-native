@@ -2,15 +2,13 @@ import { createStackNavigator, createAppContainer } from "react-navigation";
 
 import GameScreen from "./screens/GameScreen";
 import HomeScreen from "./screens/HomeScreen";
+import JoinScreen from "./screens/JoinScreen";
 
 const AppNavigator = createStackNavigator(
   {
-    Home: {
-      screen: HomeScreen
-    },
-    Game: {
-      screen: GameScreen
-    }
+    Home: HomeScreen,
+    Game: GameScreen,
+    Join: JoinScreen
   },
   {
     headerMode: "none",

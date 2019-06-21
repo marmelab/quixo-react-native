@@ -5,7 +5,8 @@ import {
   getMovables,
   postSelectCube,
   postMoveCube,
-  getMyTeam
+  getMyTeam,
+  getExistingGame
 } from "../apiRequests";
 import {
   CREATE_GAME,
@@ -16,15 +17,26 @@ import {
 } from "../game/constants";
 import { CIRCLE_VALUE } from "../constants/game";
 
-export const storeMyTeam = async (team, id) => {
+const storeMyTeam = async (team, id) =>
   await AsyncStorage.setItem(`@Quixo-game-${id}`, team.toString());
-};
+
+const getTeamFromStorage = async id =>
+  await AsyncStorage.getItem(`@Quixo-game-${id}`);
 
 export const fetchMyTeam = (id, dispatch) => () => {
   const fetchTeamCall = async () => {
+    const team = await getTeamFromStorage(id);
+    if (team !== null) {
+      return dispatch({
+        type: FETCH_TEAM_REPLY,
+        payload: { team: parseInt(team) }
+      });
+    }
     const payload = await getMyTeam(id);
-    storeMyTeam(payload.team, id);
-    dispatch({ type: FETCH_TEAM_REPLY, payload });
+    if (payload && payload.team) {
+      storeMyTeam(payload.team, id);
+      dispatch({ type: FETCH_TEAM_REPLY, payload });
+    }
   };
   if (id) {
     fetchTeamCall();
@@ -32,12 +44,18 @@ export const fetchMyTeam = (id, dispatch) => () => {
 };
 
 export const fetchGame = (id, dispatch) => () => {
-  const fetchGameCall = async () => {
+  const fetchNewGameCall = async () => {
     const payload = await getNewGame();
     dispatch({ type: CREATE_GAME, payload });
   };
+  const fetchExistingGameCall = async id => {
+    const payload = await getExistingGame(id);
+    dispatch({ type: UPDATE_GAME, payload });
+  };
   if (!id) {
-    fetchGameCall();
+    fetchNewGameCall();
+  } else {
+    fetchExistingGameCall(id);
   }
 };
 
@@ -65,4 +83,16 @@ export const moveCube = (id, dispatch) => ({ x, y }) => {
     dispatch({ type: UPDATE_GAME, payload });
   };
   moveCubeCall();
+};
+
+export const refreshGame = (id, isPlaying, dispatch) => () => {
+  const refreshGameCall = async () => {
+    const payload = await getExistingGame(id);
+    dispatch({ type: UPDATE_GAME, payload });
+  };
+  let intervalId;
+  if (!isPlaying && id) {
+    intervalId = setInterval(refreshGameCall, 1000);
+  }
+  return () => clearInterval(intervalId);
 };

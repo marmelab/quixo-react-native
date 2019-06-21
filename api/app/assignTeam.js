@@ -22,7 +22,7 @@ const assignTeam = async id => {
     const team = await updatePlayer2(id, playerTeam);
     return { team };
   }
-  return null;
+  return { team: NEUTRAL_VALUE };
 };
 
 module.exports = assignTeam;

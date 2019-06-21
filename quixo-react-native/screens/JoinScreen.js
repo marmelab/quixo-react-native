@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ImageBackground
 } from "react-native";
+import { TextInput } from "react-native-gesture-handler";
 
 const background = require("../assets/bg-quixo.jpg");
 
@@ -27,28 +28,36 @@ const styles = StyleSheet.create({
   },
   playText: {
     color: "#fff"
+  },
+  input: {
+    height: 40,
+    borderRadius: 10,
+    backgroundColor: "white",
+    alignItems: "center"
   }
 });
 
-const HomeScreen = ({ navigation }) => {
+const JoinScreen = ({ navigation }) => {
+  const [gameId, setGameId] = useState("");
   return (
     <View style={styles.container}>
       <ImageBackground source={background} style={styles.background}>
+        <TextInput
+          style={styles.input}
+          placeholder="Type the id of the game here"
+          onChangeText={text => setGameId(text)}
+          keyboardType={"number-pad"}
+          textAlign={"center"}
+        />
         <TouchableOpacity
-          onPress={() => navigation.navigate("Game")}
+          onPress={() => navigation.navigate("Game", { id: gameId })}
           style={styles.playButton}
         >
-          <Text style={styles.playText}>New Game !</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Join")}
-          style={styles.playButton}
-        >
-          <Text style={styles.playText}>Join Game !</Text>
+          <Text style={styles.playText}>Join !</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
   );
 };
 
-export default HomeScreen;
+export default JoinScreen;

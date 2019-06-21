@@ -1,3 +1,4 @@
+const getGame = require("./app/getGame");
 const createNewGame = require("./app/createNewGame");
 const selectCube = require("./app/selectCube");
 const moveCube = require("./app/moveCube");
@@ -11,6 +12,12 @@ const listen = app => {
   app.get("/new-game", async (req, res) => {
     const newGame = await createNewGame();
     res.send(newGame);
+  });
+
+  app.get("/get-game/:id", async (req, res) => {
+    const { id } = req.params;
+    const game = await getGame(id);
+    res.send(game);
   });
 
   app.get("/movables/:id", async (req, res) => {

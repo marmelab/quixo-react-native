@@ -46,7 +46,7 @@ const getDestinationsForTopOrBottomCube = ({ x, y, boardSize }) => {
   if (!isOnStart(y)) {
     destinations.push({ x, y: indexStart });
   }
-  if (!isOnEnd(y)) {
+  if (!isOnEnd(y, boardSize)) {
     destinations.push({ x, y: indexEnd });
   }
   if (isOnStart(x)) {
@@ -64,7 +64,7 @@ const getDestinationsForLeftOrRightCube = ({ x, y, boardSize }) => {
   if (!isOnStart(x)) {
     destinations.push({ x: indexStart, y });
   }
-  if (!isOnEnd(x)) {
+  if (!isOnEnd(x, boardSize)) {
     destinations.push({ x: indexEnd, y });
   }
   if (isOnStart(y)) {
@@ -75,7 +75,6 @@ const getDestinationsForLeftOrRightCube = ({ x, y, boardSize }) => {
   return destinations;
 };
 const getAvailablesDestinations = ({ selectedCube, rows: boardSize }) => {
-  const destinations = [];
   const { x, y } = selectedCube;
   if (isOnEdge(x, boardSize)) {
     return getDestinationsForTopOrBottomCube({ x, y, boardSize });
@@ -83,7 +82,7 @@ const getAvailablesDestinations = ({ selectedCube, rows: boardSize }) => {
   if (isOnEdge(y, boardSize)) {
     return getDestinationsForLeftOrRightCube({ x, y, boardSize });
   }
-  return destinations;
+  return [];
 };
 
 const moveCube = ({ board, coordsStart, coordsEnd, player }) => {

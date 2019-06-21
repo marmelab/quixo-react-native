@@ -7,7 +7,8 @@ import {
   fetchMovables,
   selectCube,
   moveCube,
-  fetchMyTeam
+  fetchMyTeam,
+  refreshGame
 } from "../game/actions";
 import { CIRCLE_VALUE, NEUTRAL_VALUE } from "../constants/game";
 
@@ -100,12 +101,13 @@ const GameScreen = ({ navigation }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { game, movables, myTeam } = state;
   const id = game.id || navigation.getParam("id", null);
+  const isPlaying = isMyTurn(myTeam, game.currentPlayer);
 
+  useEffect(refreshGame(id, isPlaying, dispatch), null);
   useEffect(fetchGame(id, dispatch), []);
   useEffect(fetchMovables(id, dispatch), [game.currentPlayer]);
   useEffect(fetchMyTeam(id, dispatch), [game.id]);
 
-  const isPlaying = isMyTurn(myTeam, game.currentPlayer);
   const handlePressCube = game.selectedCube
     ? ({ x, y }) => moveCube(id, dispatch)({ x, y })
     : ({ x, y }) => selectCube(id, dispatch)({ x, y });
