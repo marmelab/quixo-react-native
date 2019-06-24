@@ -30,8 +30,23 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: "100%"
+  },
+  rotatedImage270: {
+    transform: [{ rotate: "270deg" }]
+  },
+  rotatedImage180: {
+    transform: [{ rotate: "180deg" }]
   }
 });
+
+const getRotatedImageStyle = value => {
+  if (value === NEUTRAL_VALUE) {
+    return styles.image;
+  }
+  const rotatedStyle =
+    value === CIRCLE_VALUE ? styles.rotatedImage180 : styles.rotatedImage270;
+  return { ...styles.image, ...rotatedStyle };
+};
 
 const getLogo = value => {
   if (value === CIRCLE_VALUE) {
@@ -56,7 +71,7 @@ export default function Cube({
 
   const logo = getLogo(value);
   const image = !isSelected ? (
-    <Image source={logo} style={styles.image} />
+    <Image source={logo} style={getRotatedImageStyle(value)} />
   ) : null;
 
   if (isMovable) {

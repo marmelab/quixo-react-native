@@ -111,7 +111,7 @@ const GameScreen = ({ navigation }) => {
           ))}
         </View>
         <View style={styles.footerInstructions}>
-          <Text style={styles.instructionsText}>ID: {game.id}</Text>
+          <Text style={styles.instructionsText}>ID: {id}</Text>
         </View>
       </ImageBackground>
     </View>
