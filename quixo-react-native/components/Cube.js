@@ -25,16 +25,29 @@ const styles = StyleSheet.create({
   selectedCube: {
     borderColor: "#8B008B"
   },
+  winnerCube: {
+    backgroundColor: "#8B008B"
+  },
   image: {
     width: "90%",
     height: "90%"
   }
 });
 
-export default function Cube({ isMovable, handlePress, isSelected, value }) {
-  const cubeStyle = isSelected
-    ? { ...styles.cube, ...styles.selectedCube }
-    : styles.cube;
+export default function Cube({
+  isMovable,
+  handlePress,
+  isSelected,
+  isWinning,
+  value
+}) {
+  let cubeStyle = styles.cube;
+  if (isSelected) {
+    cubeStyle = { ...cubeStyle, ...styles.selectedCube };
+  }
+  if (isWinning) {
+    cubeStyle = { ...cubeStyle, ...styles.winnerCube };
+  }
 
   const logo = value === CIRCLE_VALUE ? circle : cross;
   const image =

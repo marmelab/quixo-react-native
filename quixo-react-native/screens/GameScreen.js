@@ -50,36 +50,50 @@ const isInMovables = movables => ({ x, y }) =>
 const isSelectedCube = selectedCube => ({ x, y }) =>
   selectedCube && selectedCube.x === x && selectedCube.y === y;
 
+const isWinningCube = winningLine => ({ x, y }) =>
+  (winningLine || []).some(line => line.x === x && line.y === y);
+
 const isMyTurn = (myTeam, currentPlayer) => myTeam === currentPlayer;
 
 const GameScreen = ({ navigation }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { game, movables, myTeam } = state;
-  const id = game.id || navigation.getParam("id", null);
-  const isPlaying = isMyTurn(myTeam, game.currentPlayer);
+  const {
+    id: gameId,
+    board,
+    currentPlayer,
+    selectedCube,
+    winner,
+    winningLine
+  } = game;
+
+  const id = gameId || navigation.getParam("id", null);
+  const isPlaying = isMyTurn(myTeam, currentPlayer);
 
   useEffect(refreshGame(id, isPlaying, dispatch), null);
   useEffect(fetchGame(id, dispatch), []);
-  useEffect(fetchMovables(id, dispatch), [game.currentPlayer]);
+  useEffect(fetchMovables(id, dispatch), [currentPlayer]);
   useEffect(fetchMyTeam(id, dispatch), [id]);
 
-  const handlePressCube = game.selectedCube
+  const handlePressCube = selectedCube
     ? ({ x, y }) => () => moveCube(id, dispatch)({ x, y })
     : ({ x, y }) => () => selectCube(id, dispatch)({ x, y });
   const isMovable = isPlaying ? isInMovables(movables) : () => false;
-  const isSelected = isSelectedCube(game.selectedCube);
+  const isSelected = isSelectedCube(selectedCube);
+  const isWinning = isWinningCube(winningLine);
 
   return (
     <View style={styles.container}>
-      <Instructions team={myTeam} isPlaying={isPlaying} />
+      <Instructions team={myTeam} isPlaying={isPlaying} winner={winner} />
       <View style={styles.board}>
-        {game.board.map((row, x) => (
+        {board.map((row, x) => (
           <View key={`row-${x}`} style={styles.row}>
             {row.map((value, y) => (
               <Cube
                 key={`cube-${x}-${y}`}
                 isMovable={isMovable({ x, y })}
                 isSelected={isSelected({ x, y })}
+                isWinning={isWinning({ x, y })}
                 handlePress={handlePressCube({ x, y })}
                 value={value}
               />
@@ -88,7 +102,7 @@ const GameScreen = ({ navigation }) => {
         ))}
       </View>
       <View style={styles.footerInstructions}>
-        <Text style={styles.instructionsText}>ID: {game.id}</Text>
+        <Text style={styles.instructionsText}>ID: {id}</Text>
       </View>
     </View>
   );

@@ -34,8 +34,18 @@ const styles = StyleSheet.create({
   }
 });
 
-const Instructions = ({ team, isPlaying }) => {
+const Instructions = ({ team, isPlaying, winner }) => {
   const isSpectator = team === NEUTRAL_VALUE;
+  if (winner) {
+    return (
+      <View style={styles.instructions}>
+        <Text style={styles.instructionsText}>
+          {`${winner === 1 ? "Player 1" : "Player 2"} has won the game !`};
+        </Text>
+      </View>
+    );
+  }
+
   if (isSpectator) {
     return (
       <View style={styles.instructions}>
@@ -43,6 +53,7 @@ const Instructions = ({ team, isPlaying }) => {
       </View>
     );
   }
+
   const logo = team === CIRCLE_VALUE ? circle : cross;
   return (
     <View style={styles.instructions}>
