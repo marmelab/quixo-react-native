@@ -20,8 +20,10 @@ import { CIRCLE_VALUE } from "../constants/game";
 const storeMyTeam = async (team, id) =>
   await AsyncStorage.setItem(`@Quixo-game-${id}`, team.toString());
 
-const getTeamFromStorage = async id =>
-  await AsyncStorage.getItem(`@Quixo-game-${id}`);
+const getTeamFromStorage = async id => {
+  const storedTeam = await AsyncStorage.getItem(`@Quixo-game-${id}`);
+  return storedTeam === null ? null : parseInt(storeMyTeam);
+};
 
 export const fetchMyTeam = (id, dispatch) => () => {
   const fetchTeamCall = async () => {

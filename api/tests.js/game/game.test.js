@@ -64,7 +64,7 @@ describe("Game functions", () => {
 
       const destinations = getAvailablesDestinations({ ...game, selectedCube });
       expect(destinations).toEqual(exepectedDestinations);
-      expect(destinations.length).toEqual(exepectedDestinations.length);
+      expect(destinations.length).toBe(exepectedDestinations.length);
     });
   });
 
