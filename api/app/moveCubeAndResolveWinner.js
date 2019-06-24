@@ -10,8 +10,7 @@ const {
 } = require("../game");
 const { NEUTRAL_VALUE } = require("../constants/game");
 
-const moveCubeAndUpdateGame = async (id, destination) => {
-  const game = await get(id);
+const moveCubeAndUpdateGame = async (game, destination) => {
   const newBoard = moveCube({
     board: game.board,
     coordsStart: game.selectedCube,

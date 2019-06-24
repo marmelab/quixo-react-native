@@ -13,7 +13,7 @@ const newGame = (rows = 5, cols = 5, board = getEmptyBoard(rows, cols)) => ({
   currentPlayer: CROSS_VALUE
 });
 
-const newGameVsAi = (...params) => ({ ...newGame(params), solo: true });
+const newGameVsAi = () => ({ ...newGame(), solo: true });
 
 const getArrayOfCubes = ({ board }) => flatten(getBoardOfCubes(board));
 

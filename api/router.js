@@ -1,13 +1,13 @@
 const getGame = require("./app/getGame");
 const createNewGame = require("./app/createNewGame");
 const selectCube = require("./app/selectCube");
-const moveCube = require("./app/moveCube");
+const playMove = require("./app/playMove");
 const getMovables = require("./app/getMovables");
 const getDestinations = require("./app/getDestinations");
 const assignTeam = require("./app/assignTeam");
-const createNewGameVsAi = require("./createNewGameVsAi");
+const createNewGameVsAi = require("./app/createNewGameVsAi");
 
-const listen = app => {
+const listen = async app => {
   app.get("/", (req, res) => res.send("Hello :)"));
 
   app.get("/new-game", async (req, res) => {
@@ -41,7 +41,7 @@ const listen = app => {
 
   app.post("/move-cube", async (req, res) => {
     const { id, ...destination } = req.body;
-    const newGame = await moveCube(id, destination);
+    const newGame = await playMove(id, destination);
     res.send(newGame);
   });
 

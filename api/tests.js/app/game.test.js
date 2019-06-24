@@ -1,6 +1,6 @@
 const createNewGame = require("../../app/createNewGame");
 const selectCube = require("../../app/selectCube");
-const moveCube = require("../../app/moveCube");
+const playMove = require("../../app/playMove");
 const getMovables = require("../../app/getMovables");
 
 describe("A play sequence", () => {
@@ -14,7 +14,7 @@ describe("A play sequence", () => {
     const gameWithCubeSelected = await selectCube(game.id, { x: 0, y: 0 });
     expect(gameWithCubeSelected.selectedCube).toEqual({ x: 0, y: 0 });
 
-    const gameWithMovedCube = await moveCube(game.id, { x: 4, y: 0 });
+    const gameWithMovedCube = await playMove(game.id, { x: 4, y: 0 });
     expect(gameWithMovedCube.selectedCube).toEqual(null);
     expect(gameWithMovedCube.board).not.toEqual(game.board);
     expect(gameWithMovedCube.currentPlayer).not.toEqual(game.currentPlayer);
@@ -35,7 +35,7 @@ describe("A play sequence", () => {
     const gameWithCubeSelected = await selectCube(game.id, { x: 4, y: 4 });
     expect(gameWithCubeSelected.selectedCube).toEqual({ x: 4, y: 4 });
 
-    const gameWithMovedCube = await moveCube(game.id, { x: 0, y: 4 });
+    const gameWithMovedCube = await playMove(game.id, { x: 0, y: 4 });
 
     const expectedWinner = 1;
     const exepctedWinningLine = [
