@@ -14,14 +14,14 @@ const styles = StyleSheet.create({
     width: 70,
     aspectRatio: 1,
     borderRadius: 10,
-    borderWidth: 4,
+    borderWidth: 2,
     borderColor: "#CDCDCD",
     justifyContent: "center",
     alignItems: "center",
     margin: 2
   },
   movable: {
-    borderColor: "#09F9E3"
+    borderColor: "black"
   },
   selectedCube: {
     borderColor: "#8B008B"

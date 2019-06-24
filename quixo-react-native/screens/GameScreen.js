@@ -25,12 +25,9 @@ const styles = StyleSheet.create({
   board: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#4682B4",
     width: "100%",
     height: "70%",
-    borderRadius: 10,
-    borderWidth: 8,
-    borderColor: "#D2FDFE"
+    padding: 10
   },
   boardBackground: {
     width: "100%",
@@ -43,14 +40,14 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   instructionsText: {
-    color: "white",
+    color: "black",
     textAlign: "center",
     fontSize: 15
   },
   footerInstructions: {
     height: "5%",
     justifyContent: "flex-end",
-    alignItems: "center"
+    alignItems: "flex-end"
   }
 });
 
@@ -95,26 +92,28 @@ const GameScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Instructions team={myTeam} isPlaying={isPlaying} winner={winner} />
-      <ImageBackground source={boardBackground} style={styles.board}>
-        {board.map((row, x) => (
-          <View key={`row-${x}`} style={styles.row}>
-            {row.map((value, y) => (
-              <Cube
-                key={`cube-${x}-${y}`}
-                isMovable={isMovable({ x, y })}
-                isSelected={isSelected({ x, y })}
-                isWinning={isWinning({ x, y })}
-                handlePress={handlePressCube({ x, y })}
-                value={value}
-              />
-            ))}
-          </View>
-        ))}
+      <ImageBackground source={boardBackground} style={styles.boardBackground}>
+        <Instructions team={myTeam} isPlaying={isPlaying} winner={winner} />
+        <View style={styles.board}>
+          {board.map((row, x) => (
+            <View key={`row-${x}`} style={styles.row}>
+              {row.map((value, y) => (
+                <Cube
+                  key={`cube-${x}-${y}`}
+                  isMovable={isMovable({ x, y })}
+                  isSelected={isSelected({ x, y })}
+                  isWinning={isWinning({ x, y })}
+                  handlePress={handlePressCube({ x, y })}
+                  value={value}
+                />
+              ))}
+            </View>
+          ))}
+        </View>
+        <View style={styles.footerInstructions}>
+          <Text style={styles.instructionsText}>ID: {game.id}</Text>
+        </View>
       </ImageBackground>
-      <View style={styles.footerInstructions}>
-        <Text style={styles.instructionsText}>ID: {id}</Text>
-      </View>
     </View>
   );
 };
