@@ -43,3 +43,8 @@ export const getMyTeam = async id => {
   const response = await fetch(`${API_HOST}/assign-me-team/${id}`);
   return await response.json();
 };
+
+export const getNewGameVsAi = async () => {
+  const response = await fetch(`${API_HOST}/new-game-ai`);
+  return await response.json();
+};

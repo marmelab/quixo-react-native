@@ -38,7 +38,13 @@ const HomeScreen = ({ navigation }) => {
           onPress={() => navigation.navigate("Game")}
           style={styles.playButton}
         >
-          <Text style={styles.playText}>New Game !</Text>
+          <Text style={styles.playText}>Play User VS User !</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Game", { solo: true })}
+          style={styles.playButton}
+        >
+          <Text style={styles.playText}>Play User VS AI !</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate("Join")}

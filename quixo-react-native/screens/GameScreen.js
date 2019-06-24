@@ -68,10 +68,11 @@ const GameScreen = ({ navigation }) => {
   } = game;
 
   const id = gameId || navigation.getParam("id", null);
+  const isSolo = navigation.getParam("solo", false);
   const isPlaying = isMyTurn(myTeam, currentPlayer);
 
   useEffect(refreshGame(id, isPlaying, dispatch), null);
-  useEffect(fetchGame(id, dispatch), []);
+  useEffect(fetchGame(id, isSolo, dispatch), []);
   useEffect(fetchMovables(id, dispatch), [currentPlayer]);
   useEffect(fetchMyTeam(id, dispatch), [id]);
 
