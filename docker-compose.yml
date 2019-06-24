@@ -1,4 +1,4 @@
-version: '3.2'
+version: "3.2"
 
 services:
   postgres:
@@ -11,6 +11,15 @@ services:
       - "5433:5432"
     expose:
       - "5433"
+  advisor:
+    build: docker/go
+    volumes:
+      - ./advisor-go/src:/go/src
+    ports:
+      - "8001:8001"
+    expose:
+      - "8001"
+    command: CompileDaemon -directory="./src/quixo/" -command="./src/quixo/quixo"
   api:
     image: node:12.4.0-stretch
     ports:
@@ -22,6 +31,7 @@ services:
       - ./docker/wait-for-it.sh:/docker/wait-for-it.sh
     depends_on:
       - postgres
+      - advisor
     env_file: ./api/.env
     working_dir: /api
     command:

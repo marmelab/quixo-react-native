@@ -11,12 +11,13 @@ const get = id =>
 const save = game =>
   db
     .query({
-      text: `INSERT INTO ${TABLE_NAME}(board, rows, cols, current_player) VALUES($1, $2, $3, $4) RETURNING *`,
+      text: `INSERT INTO ${TABLE_NAME}(board, rows, cols, current_player, solo) VALUES($1, $2, $3, $4, $5) RETURNING *`,
       values: [
         JSON.stringify(game.board),
         game.rows,
         game.cols,
-        game.currentPlayer
+        game.currentPlayer,
+        game.solo
       ]
     })
     .then(res => toEntity(res.rows[0]));

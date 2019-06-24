@@ -6,7 +6,8 @@ import {
   postSelectCube,
   postMoveCube,
   getMyTeam,
-  getExistingGame
+  getExistingGame,
+  getNewGameVsAi
 } from "../apiRequests";
 import {
   CREATE_GAME,
@@ -15,7 +16,6 @@ import {
   SELECT_CUBE_REPLY,
   FETCH_TEAM_REPLY
 } from "../game/constants";
-import { CIRCLE_VALUE } from "../constants/game";
 
 const storeMyTeam = async (team, id) =>
   await AsyncStorage.setItem(`@Quixo-game-${id}`, team.toString());
@@ -45,19 +45,19 @@ export const fetchMyTeam = (id, dispatch) => () => {
   }
 };
 
-export const fetchGame = (id, dispatch) => () => {
+export const fetchGame = (id, isSolo, dispatch) => () => {
   const fetchNewGameCall = async () => {
-    const payload = await getNewGame();
+    const payload = isSolo ? await getNewGameVsAi() : await getNewGame();
     dispatch({ type: CREATE_GAME, payload });
   };
-  const fetchExistingGameCall = async id => {
+  const fetchExistingGameCall = async () => {
     const payload = await getExistingGame(id);
     dispatch({ type: UPDATE_GAME, payload });
   };
   if (!id) {
     fetchNewGameCall();
   } else {
-    fetchExistingGameCall(id);
+    fetchExistingGameCall();
   }
 };
 

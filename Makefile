@@ -38,5 +38,10 @@ test-api-watch:
 	docker-compose run --rm \
 		api npm run test-watch
 
+test-go:
+	docker-compose run --rm \
+		advisor go test -v tests
+
 test:
 	$(MAKE) test-api
+	$(MAKE) test-go

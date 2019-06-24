@@ -13,6 +13,8 @@ const newGame = (rows = 5, cols = 5, board = getEmptyBoard(rows, cols)) => ({
   currentPlayer: CROSS_VALUE
 });
 
+const newGameVsAi = () => ({ ...newGame(), solo: true });
+
 const getArrayOfCubes = ({ board }) => flatten(getBoardOfCubes(board));
 
 const getBoardOfCubes = board =>
@@ -193,5 +195,6 @@ module.exports = {
   flipRowsAndCols,
   copyBoard,
   getNextPlayer,
-  resolveWinnerAndWinningLine
+  resolveWinnerAndWinningLine,
+  newGameVsAi
 };
