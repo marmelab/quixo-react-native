@@ -7,7 +7,7 @@ const getDestinations = require("./app/getDestinations");
 const assignTeam = require("./app/assignTeam");
 const createNewGameVsAi = require("./app/createNewGameVsAi");
 
-const listen = async app => {
+const listen = app => {
   app.get("/", (req, res) => res.send("Hello :)"));
 
   app.get("/new-game", async (req, res) => {

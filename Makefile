@@ -44,3 +44,4 @@ test-go:
 
 test:
 	$(MAKE) test-api
+	$(MAKE) test-go

@@ -47,25 +47,17 @@ export const fetchMyTeam = (id, dispatch) => () => {
 
 export const fetchGame = (id, isSolo, dispatch) => () => {
   const fetchNewGameCall = async () => {
-    const payload = await getNewGame();
+    const payload = isSolo ? await getNewGameVsAi() : await getNewGame();
     dispatch({ type: CREATE_GAME, payload });
   };
-  const fetchExistingGameCall = async id => {
+  const fetchExistingGameCall = async () => {
     const payload = await getExistingGame(id);
     dispatch({ type: UPDATE_GAME, payload });
   };
-  const fetchNewGameVsAiCall = async () => {
-    const payload = await getNewGameVsAi();
-    dispatch({ type: CREATE_GAME, payload });
-  };
   if (!id) {
-    if (isSolo) {
-      fetchNewGameVsAiCall();
-    } else {
-      fetchNewGameCall();
-    }
+    fetchNewGameCall();
   } else {
-    fetchExistingGameCall(id);
+    fetchExistingGameCall();
   }
 };
 

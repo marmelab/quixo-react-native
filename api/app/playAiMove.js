@@ -29,11 +29,10 @@ const fetchBestMove = ({ board, currentPlayer }) =>
 
 const playAiMove = async game => {
   await wait(1);
-  const advice = await fetchBestMove(game);
-  const selectedCube = advice.coordsStart;
-  const gameWithSelectedCube = await selectCube(game.id, selectedCube);
+  const { coordsStart, coordsEnd } = await fetchBestMove(game);
+  const gameWithSelectedCube = await selectCube(game.id, coordsStart);
   await wait(2);
-  return await moveCubeAndResolveWinner(gameWithSelectedCube, advice.coordsEnd);
+  return await moveCubeAndResolveWinner(gameWithSelectedCube, coordsEnd);
 };
 
 module.exports = playAiMove;
