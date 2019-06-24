@@ -10,18 +10,18 @@ const neutral = require("../assets/neutral.png");
 const styles = StyleSheet.create({
   cube: {
     flex: 1,
-    height: 60,
-    width: 60,
-    margin: 8,
+    height: 70,
+    width: 70,
     aspectRatio: 1,
     borderRadius: 10,
-    borderWidth: 2,
+    borderWidth: 4,
     borderColor: "#CDCDCD",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    margin: 2
   },
   movable: {
-    borderColor: "#00FF7F"
+    borderColor: "#09F9E3"
   },
   selectedCube: {
     borderColor: "#8B008B"

@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
   instructionsText: {
     color: "white",
     textAlign: "center",
-    fontWeight: "bold",
     fontSize: 15
   },
   teamInstruction: {

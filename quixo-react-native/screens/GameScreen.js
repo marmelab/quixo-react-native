@@ -12,7 +12,7 @@ import {
   refreshGame
 } from "../game/actions";
 
-const boardBackground = require("../assets/ebene.jpg");
+const boardBackground = require("../assets/board.jpg");
 
 const styles = StyleSheet.create({
   container: {
@@ -27,7 +27,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#4682B4",
     width: "100%",
-    height: "70%"
+    height: "70%",
+    borderRadius: 10,
+    borderWidth: 8,
+    borderColor: "#D2FDFE"
+  },
+  boardBackground: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center"
   },
   row: {
     justifyContent: "center",
@@ -36,7 +45,6 @@ const styles = StyleSheet.create({
   instructionsText: {
     color: "white",
     textAlign: "center",
-    fontWeight: "bold",
     fontSize: 15
   },
   footerInstructions: {

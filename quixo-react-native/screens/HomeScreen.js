@@ -13,8 +13,15 @@ const styles = StyleSheet.create({
   background: {
     width: "100%",
     height: "100%",
-    justifyContent: "center",
+    justifyContent: "flex-end",
     alignItems: "center"
+  },
+  buttons: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    marginBottom: "20%"
   },
   playButton: {
     width: "50%",
@@ -23,35 +30,38 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: "center",
     justifyContent: "center",
-    margin: 30
+    margin: 10
   },
   playText: {
-    color: "#fff"
+    color: "#fff",
+    fontFamily: "Roboto"
   }
 });
 
 const HomeScreen = ({ navigation }) => {
   return (
-    <View style={styles.container}>
+    <View>
       <ImageBackground source={background} style={styles.background}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Game")}
-          style={styles.playButton}
-        >
-          <Text style={styles.playText}>Play User VS User !</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Game", { solo: true })}
-          style={styles.playButton}
-        >
-          <Text style={styles.playText}>Play User VS AI !</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Join")}
-          style={styles.playButton}
-        >
-          <Text style={styles.playText}>Join Game !</Text>
-        </TouchableOpacity>
+        <View style={styles.buttons}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Game")}
+            style={styles.playButton}
+          >
+            <Text style={styles.playText}>Play User VS User !</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Game", { solo: true })}
+            style={styles.playButton}
+          >
+            <Text style={styles.playText}>Play User VS AI !</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Join")}
+            style={styles.playButton}
+          >
+            <Text style={styles.playText}>Join Game !</Text>
+          </TouchableOpacity>
+        </View>
       </ImageBackground>
     </View>
   );
