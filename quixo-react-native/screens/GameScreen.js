@@ -50,7 +50,7 @@ const isInMovables = movables => ({ x, y }) =>
 const isSelectedCube = selectedCube => ({ x, y }) =>
   selectedCube && selectedCube.x === x && selectedCube.y === y;
 
-const isMyTurn = (myTeam, currentPlayer) => myTeam === currentPlayer;
+const isMyTurn = (myTeam, currentPlayer) => myTeam == currentPlayer;
 
 const GameScreen = ({ navigation }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -58,6 +58,7 @@ const GameScreen = ({ navigation }) => {
   const id = game.id || navigation.getParam("id", null);
   const isPlaying = isMyTurn(myTeam, game.currentPlayer);
 
+  console.log(`currentPlayer: ${game.currentPlayer}, myTeam: ${myTeam}`);
   useEffect(refreshGame(id, isPlaying, dispatch), null);
   useEffect(fetchGame(id, dispatch), []);
   useEffect(fetchMovables(id, dispatch), [game.currentPlayer]);
