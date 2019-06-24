@@ -3,7 +3,8 @@ const {
   newGame,
   getMovablesCubes,
   getAvailablesDestinations,
-  moveCube
+  moveCube,
+  resolveWinnerAndWinningLine
 } = require("../../game");
 
 describe("Game functions", () => {
@@ -123,6 +124,109 @@ describe("Game functions", () => {
       });
 
       expect(board).toEqual(expectedBoard);
+    });
+  });
+  describe("resolveWinnerAndWinningLine", () => {
+    it("should return the only winner on straight line", () => {
+      const player = 1;
+      const game = newGame(5, 5, [
+        [0, 0, 0, 0, 0],
+        [player, player, player, player, player],
+        [0, 0, 0, 0, 0],
+        [0, 0, player, 0, 0],
+        [0, 0, 0, 0, 0]
+      ]);
+      const expectedWinner = player;
+      const expectedWinningLine = [
+        { x: 1, y: 0 },
+        { x: 1, y: 1 },
+        { x: 1, y: 2 },
+        { x: 1, y: 3 },
+        { x: 1, y: 4 }
+      ];
+      const { winner, winningLine } = resolveWinnerAndWinningLine(game);
+
+      expect(winner).toEqual(expectedWinner);
+      expect(winningLine).toEqual(expectedWinningLine);
+    });
+    it("should return the only winner on column", () => {
+      const player = -1;
+      const game = newGame(5, 5, [
+        [0, 0, player, 0, 0],
+        [0, 0, player, 0, 0],
+        [0, 0, player, 0, 0],
+        [0, 0, player, 0, 0],
+        [0, 0, player, 0, 0]
+      ]);
+      const expectedWinner = player;
+      const expectedWinningLine = [
+        { x: 0, y: 2 },
+        { x: 1, y: 2 },
+        { x: 2, y: 2 },
+        { x: 3, y: 2 },
+        { x: 4, y: 2 }
+      ];
+      const { winner, winningLine } = resolveWinnerAndWinningLine(game);
+
+      expect(winner).toEqual(expectedWinner);
+      expect(winningLine).toEqual(expectedWinningLine);
+    });
+    it("should return the only winner on diag line", () => {
+      const player = -1;
+      const game = newGame(5, 5, [
+        [player, 0, 0, 0, 0],
+        [0, player, 0, 0, 0],
+        [0, 0, player, 0, 0],
+        [0, 0, 0, player, 0],
+        [0, 0, 0, 0, player]
+      ]);
+      const expectedWinner = player;
+      const expectedWinningLine = [
+        { x: 0, y: 0 },
+        { x: 1, y: 1 },
+        { x: 2, y: 2 },
+        { x: 3, y: 3 },
+        { x: 4, y: 4 }
+      ];
+      const { winner, winningLine } = resolveWinnerAndWinningLine(game);
+
+      expect(winner).toEqual(expectedWinner);
+      expect(winningLine).toEqual(expectedWinningLine);
+    });
+    it("should return the no current player when draw", () => {
+      const currentPlayer = 1;
+      const player = -1;
+      const game = newGame(5, 5, [
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [
+          currentPlayer,
+          currentPlayer,
+          currentPlayer,
+          currentPlayer,
+          currentPlayer
+        ],
+        [player, player, player, player, player],
+        [
+          currentPlayer,
+          currentPlayer,
+          currentPlayer,
+          currentPlayer,
+          currentPlayer
+        ]
+      ]);
+      const expectedWinner = player;
+      const expectedWinningLine = [
+        { x: 3, y: 0 },
+        { x: 3, y: 1 },
+        { x: 3, y: 2 },
+        { x: 3, y: 3 },
+        { x: 3, y: 4 }
+      ];
+      const { winner, winningLine } = resolveWinnerAndWinningLine(game);
+
+      expect(winner).toEqual(expectedWinner);
+      expect(winningLine).toEqual(expectedWinningLine);
     });
   });
 });

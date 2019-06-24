@@ -53,11 +53,20 @@ const updatePlayer2 = (id, team) =>
     })
     .then(res => res.rows[0].player2);
 
+const updateBoardAndWinner = (id, board, winner, winningLine) =>
+  db
+    .query({
+      text: `UPDATE ${TABLE_NAME} SET board = $1, winner = $2, winning_line = $3, selected_cube = null WHERE id = $4 RETURNING *`,
+      values: [JSON.stringify(board), winner, JSON.stringify(winningLine), id]
+    })
+    .then(res => toEntity(res.rows[0]));
+
 module.exports = {
   get,
   save,
   updateSelectedCube,
   updateBoardAndPlayer,
   updatePlayer1,
-  updatePlayer2
+  updatePlayer2,
+  updateBoardAndWinner
 };

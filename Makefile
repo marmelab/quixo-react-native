@@ -9,19 +9,34 @@ api-install:
 	docker-compose run --rm \
 		api npm install
 
+app-install:
+	cd quixo-react-native && npm i
+
 install:
 	cp -n api/.env.dist api/.env
 	$(MAKE) api-install
+	$(MAKE) app-install
 
-start: ## Start the server
+app-start:
+	cd quixo-react-native && npm run start
+
+start: ## Start the server + run the app
 	docker-compose up -d
+	$(MAKE) app-start
 
 stop: ## Stop the server
 	docker-compose down
 
+logs:
+	docker-compose logs -f
+
 test-api:
 	docker-compose run --rm \
 		api npm run test
+
+test-api-watch:
+	docker-compose run --rm \
+		api npm run test-watch
 
 test:
 	$(MAKE) test-api

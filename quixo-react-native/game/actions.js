@@ -22,7 +22,7 @@ const storeMyTeam = async (team, id) =>
 
 const getTeamFromStorage = async id => {
   const storedTeam = await AsyncStorage.getItem(`@Quixo-game-${id}`);
-  return storedTeam === null ? null : parseInt(storeMyTeam);
+  return storedTeam === null ? null : parseInt(storedTeam);
 };
 
 export const fetchMyTeam = (id, dispatch) => () => {
@@ -31,7 +31,7 @@ export const fetchMyTeam = (id, dispatch) => () => {
     if (team !== null) {
       return dispatch({
         type: FETCH_TEAM_REPLY,
-        payload: { team: parseInt(team) }
+        payload: { team }
       });
     }
     const payload = await getMyTeam(id);
