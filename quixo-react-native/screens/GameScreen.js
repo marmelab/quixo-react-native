@@ -78,7 +78,7 @@ const GameScreen = ({ navigation }) => {
   const handlePressCube = selectedCube
     ? ({ x, y }) => () => moveCube(id, dispatch)({ x, y })
     : ({ x, y }) => () => selectCube(id, dispatch)({ x, y });
-  const isMovable = isPlaying ? isInMovables(movables) : () => false;
+  const isMovable = isPlaying && !winner ? isInMovables(movables) : () => false;
   const isSelected = isSelectedCube(selectedCube);
   const isWinning = isWinningCube(winningLine);
 

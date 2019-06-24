@@ -40,7 +40,7 @@ const Instructions = ({ team, isPlaying, winner }) => {
     return (
       <View style={styles.instructions}>
         <Text style={styles.instructionsText}>
-          {`${winner === 1 ? "Player 1" : "Player 2"} has won the game !`};
+          {`${winner === 1 ? "Player 1" : "Player 2"} has won the game !`}
         </Text>
       </View>
     );

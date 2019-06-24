@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     borderColor: "#8B008B"
   },
   winnerCube: {
-    backgroundColor: "#8B008B"
+    backgroundColor: "green"
   },
   image: {
     width: "90%",
