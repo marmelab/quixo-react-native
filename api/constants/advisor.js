@@ -1,3 +1,3 @@
 module.exports = {
-  ADVISOR_HOST: "http://advisor:8001"
+  ADVISOR_HOST: process.env.ADVISOR_HOST || "http://localhost:8001"
 };
