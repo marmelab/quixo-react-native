@@ -23,11 +23,9 @@ const styles = StyleSheet.create({
   movable: {
     borderColor: "black"
   },
-  selectedCube: {
-    borderColor: "#8B008B"
-  },
   winnerCube: {
-    backgroundColor: "green"
+    borderColor: "green",
+    borderWidth: 10
   },
   image: {
     width: "100%",
@@ -52,13 +50,9 @@ export default function Cube({
   isWinning,
   value
 }) {
-  let cubeStyle = styles.cube;
-  if (isSelected) {
-    cubeStyle = { ...cubeStyle, ...styles.selectedCube };
-  }
-  if (isWinning) {
-    cubeStyle = { ...cubeStyle, ...styles.winnerCube };
-  }
+  const cubeStyle = isWinning
+    ? { ...styles.cube, ...styles.winnerCube }
+    : styles.cube;
 
   const logo = getLogo(value);
   const image = !isSelected ? (
@@ -75,5 +69,5 @@ export default function Cube({
       </TouchableOpacity>
     );
   }
-  return <View style={styles.cubeStyle}>{image}</View>;
+  return <View style={cubeStyle}>{image}</View>;
 }
