@@ -1,10 +1,11 @@
 import React from "react";
 import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
 
-import { CIRCLE_VALUE, NEUTRAL_VALUE } from "../constants/game";
+import { CIRCLE_VALUE, NEUTRAL_VALUE, CROSS_VALUE } from "../constants/game";
 
 const circle = require("../assets/circle.png");
 const cross = require("../assets/cross.png");
+const neutral = require("../assets/neutral.png");
 
 const styles = StyleSheet.create({
   cube: {
@@ -14,7 +15,7 @@ const styles = StyleSheet.create({
     margin: 8,
     aspectRatio: 1,
     borderRadius: 10,
-    borderWidth: 5,
+    borderWidth: 2,
     borderColor: "#CDCDCD",
     justifyContent: "center",
     alignItems: "center"
@@ -29,10 +30,20 @@ const styles = StyleSheet.create({
     backgroundColor: "green"
   },
   image: {
-    width: "90%",
-    height: "90%"
+    width: "100%",
+    height: "100%"
   }
 });
+
+const getLogo = value => {
+  if (value === CIRCLE_VALUE) {
+    return circle;
+  }
+  if (value === CROSS_VALUE) {
+    return cross;
+  }
+  return neutral;
+};
 
 export default function Cube({
   isMovable,
@@ -49,11 +60,10 @@ export default function Cube({
     cubeStyle = { ...cubeStyle, ...styles.winnerCube };
   }
 
-  const logo = value === CIRCLE_VALUE ? circle : cross;
-  const image =
-    value !== NEUTRAL_VALUE ? (
-      <Image source={logo} style={styles.image} />
-    ) : null;
+  const logo = getLogo(value);
+  const image = !isSelected ? (
+    <Image source={logo} style={styles.image} />
+  ) : null;
 
   if (isMovable) {
     return (
@@ -65,5 +75,5 @@ export default function Cube({
       </TouchableOpacity>
     );
   }
-  return <View style={cubeStyle}>{image}</View>;
+  return <View style={styles.cubeStyle}>{image}</View>;
 }

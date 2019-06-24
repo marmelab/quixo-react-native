@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect } from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, ImageBackground } from "react-native";
 import { reducer, initialState } from "../game/reducer";
 import Cube from "../components/Cube";
 import Instructions from "../components/Instruction";
@@ -11,6 +11,8 @@ import {
   fetchMyTeam,
   refreshGame
 } from "../game/actions";
+
+const boardBackground = require("../assets/ebene.jpg");
 
 const styles = StyleSheet.create({
   container: {
@@ -86,7 +88,7 @@ const GameScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Instructions team={myTeam} isPlaying={isPlaying} winner={winner} />
-      <View style={styles.board}>
+      <ImageBackground source={boardBackground} style={styles.board}>
         {board.map((row, x) => (
           <View key={`row-${x}`} style={styles.row}>
             {row.map((value, y) => (
@@ -101,7 +103,7 @@ const GameScreen = ({ navigation }) => {
             ))}
           </View>
         ))}
-      </View>
+      </ImageBackground>
       <View style={styles.footerInstructions}>
         <Text style={styles.instructionsText}>ID: {id}</Text>
       </View>
