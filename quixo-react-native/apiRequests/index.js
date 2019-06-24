@@ -13,6 +13,11 @@ export const getNewGame = async () => {
   return await response.json();
 };
 
+export const getExistingGame = async id => {
+  const response = await fetch(`${API_HOST}/get-game/${id}`);
+  return await response.json();
+};
+
 export const getMovables = async id => {
   const response = await fetch(`${API_HOST}/movables/${id}`);
   return await response.json();
@@ -31,5 +36,10 @@ export const postMoveCube = async ({ id, x, y }) => {
     ...postOptions,
     body: JSON.stringify({ id, x, y })
   });
+  return await response.json();
+};
+
+export const getMyTeam = async id => {
+  const response = await fetch(`${API_HOST}/assign-me-team/${id}`);
   return await response.json();
 };

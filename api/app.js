@@ -8,4 +8,4 @@ app.use(bodyParser.json());
 
 router(app);
 
-app.listen(PORT, () => console.log(`App listnen on ${PORT}`));
+app.listen(PORT, () => console.log(`App listen on ${PORT}`));

@@ -1,30 +1,46 @@
 import React, { useReducer, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text, Image } from "react-native";
 import { reducer, initialState } from "../game/reducer";
 import Cube from "../components/Cube";
+import Instructions from "../components/Instruction";
 import {
-  getNewGame,
-  getMovables,
-  postSelectCube,
-  postMoveCube
-} from "../apiRequests";
-import {
-  UPDATE_GAME,
-  FETCH_MOVABLES,
-  SELECT_CUBE_REPLY
-} from "../game/constants";
+  fetchGame,
+  fetchMovables,
+  selectCube,
+  moveCube,
+  fetchMyTeam,
+  refreshGame
+} from "../game/actions";
 
 const styles = StyleSheet.create({
-  board: {
+  container: {
     width: "100%",
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#4682B4"
+    backgroundColor: "black"
+  },
+  board: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#4682B4",
+    width: "100%",
+    height: "70%"
   },
   row: {
     justifyContent: "center",
     flexDirection: "row"
+  },
+  instructionsText: {
+    color: "white",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 15
+  },
+  footerInstructions: {
+    height: "5%",
+    justifyContent: "flex-end",
+    alignItems: "center"
   }
 });
 
@@ -34,68 +50,46 @@ const isInMovables = movables => ({ x, y }) =>
 const isSelectedCube = selectedCube => ({ x, y }) =>
   selectedCube && selectedCube.x === x && selectedCube.y === y;
 
-const fetchGame = (id, dispatch) => () => {
-  const fetchGameCall = async () => {
-    const payload = await getNewGame();
-    dispatch({ type: UPDATE_GAME, payload });
-  };
-  if (!id) {
-    fetchGameCall();
-  }
-};
-
-const fetchMovables = (id, dispatch) => () => {
-  const fetchMovablesCall = async () => {
-    const payload = await getMovables(id);
-    dispatch({ type: FETCH_MOVABLES, payload });
-  };
-  if (id) {
-    fetchMovablesCall();
-  }
-};
-
-const selectCube = (id, dispatch) => ({ x, y }) => {
-  const selectCubeCall = async () => {
-    const payload = await postSelectCube({ id, x, y });
-    dispatch({ type: SELECT_CUBE_REPLY, payload });
-  };
-  selectCubeCall();
-};
-
-const moveCube = (id, dispatch) => ({ x, y }) => {
-  const moveCubeCall = async () => {
-    const payload = await postMoveCube({ id, x, y });
-    dispatch({ type: UPDATE_GAME, payload });
-  };
-  moveCubeCall();
-};
+const isMyTurn = (myTeam, currentPlayer) => myTeam === currentPlayer;
 
 const GameScreen = ({ navigation }) => {
-  const [{ game, movables }, dispatch] = useReducer(reducer, initialState);
-  const id = navigation.getParam("id", null) || game.id;
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { game, movables, myTeam } = state;
+  const id = game.id || navigation.getParam("id", null);
+  const isPlaying = isMyTurn(myTeam, game.currentPlayer);
+
+  useEffect(refreshGame(id, isPlaying, dispatch), null);
   useEffect(fetchGame(id, dispatch), []);
   useEffect(fetchMovables(id, dispatch), [game.currentPlayer]);
+  useEffect(fetchMyTeam(id, dispatch), [id]);
 
   const handlePressCube = game.selectedCube
-    ? ({ x, y }) => moveCube(id, dispatch)({ x, y })
-    : ({ x, y }) => selectCube(id, dispatch)({ x, y });
-  const isMovable = isInMovables(movables);
+    ? ({ x, y }) => () => moveCube(id, dispatch)({ x, y })
+    : ({ x, y }) => () => selectCube(id, dispatch)({ x, y });
+  const isMovable = isPlaying ? isInMovables(movables) : () => false;
   const isSelected = isSelectedCube(game.selectedCube);
+
   return (
-    <View style={styles.board}>
-      {game.board.map((row, x) => (
-        <View key={`row-${x}`} style={styles.row}>
-          {row.map((value, y) => (
-            <Cube
-              key={`cube-${x}-${y}`}
-              isMovable={isMovable({ x, y })}
-              isSelected={isSelected({ x, y })}
-              handlePress={() => handlePressCube({ x, y })}
-              value={value}
-            />
-          ))}
-        </View>
-      ))}
+    <View style={styles.container}>
+      <Instructions team={myTeam} isPlaying={isPlaying} />
+      <View style={styles.board}>
+        {game.board.map((row, x) => (
+          <View key={`row-${x}`} style={styles.row}>
+            {row.map((value, y) => (
+              <Cube
+                key={`cube-${x}-${y}`}
+                isMovable={isMovable({ x, y })}
+                isSelected={isSelected({ x, y })}
+                handlePress={handlePressCube({ x, y })}
+                value={value}
+              />
+            ))}
+          </View>
+        ))}
+      </View>
+      <View style={styles.footerInstructions}>
+        <Text style={styles.instructionsText}>ID: {game.id}</Text>
+      </View>
     </View>
   );
 };
