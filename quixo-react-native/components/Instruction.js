@@ -21,10 +21,10 @@ const styles = StyleSheet.create({
     padding: 30
   },
   instructionsText: {
-    color: "white",
+    color: "black",
     textAlign: "center",
-    fontWeight: "bold",
-    fontSize: 15
+    fontWeight: "700",
+    fontSize: 18
   },
   teamInstruction: {
     flex: 1,

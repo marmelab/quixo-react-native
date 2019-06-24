@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect } from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, ImageBackground } from "react-native";
 import { reducer, initialState } from "../game/reducer";
 import Cube from "../components/Cube";
 import Instructions from "../components/Instruction";
@@ -12,6 +12,8 @@ import {
   refreshGame
 } from "../game/actions";
 
+const boardBackground = require("../assets/board.jpg");
+
 const styles = StyleSheet.create({
   container: {
     width: "100%",
@@ -23,24 +25,29 @@ const styles = StyleSheet.create({
   board: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#4682B4",
     width: "100%",
-    height: "70%"
+    height: "70%",
+    padding: 10
+  },
+  boardBackground: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center"
   },
   row: {
     justifyContent: "center",
     flexDirection: "row"
   },
   instructionsText: {
-    color: "white",
+    color: "black",
     textAlign: "center",
-    fontWeight: "bold",
     fontSize: 15
   },
   footerInstructions: {
     height: "5%",
     justifyContent: "flex-end",
-    alignItems: "center"
+    alignItems: "flex-end"
   }
 });
 
@@ -85,26 +92,28 @@ const GameScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Instructions team={myTeam} isPlaying={isPlaying} winner={winner} />
-      <View style={styles.board}>
-        {board.map((row, x) => (
-          <View key={`row-${x}`} style={styles.row}>
-            {row.map((value, y) => (
-              <Cube
-                key={`cube-${x}-${y}`}
-                isMovable={isMovable({ x, y })}
-                isSelected={isSelected({ x, y })}
-                isWinning={isWinning({ x, y })}
-                handlePress={handlePressCube({ x, y })}
-                value={value}
-              />
-            ))}
-          </View>
-        ))}
-      </View>
-      <View style={styles.footerInstructions}>
-        <Text style={styles.instructionsText}>ID: {id}</Text>
-      </View>
+      <ImageBackground source={boardBackground} style={styles.boardBackground}>
+        <Instructions team={myTeam} isPlaying={isPlaying} winner={winner} />
+        <View style={styles.board}>
+          {board.map((row, x) => (
+            <View key={`row-${x}`} style={styles.row}>
+              {row.map((value, y) => (
+                <Cube
+                  key={`cube-${x}-${y}`}
+                  isMovable={isMovable({ x, y })}
+                  isSelected={isSelected({ x, y })}
+                  isWinning={isWinning({ x, y })}
+                  handlePress={handlePressCube({ x, y })}
+                  value={value}
+                />
+              ))}
+            </View>
+          ))}
+        </View>
+        <View style={styles.footerInstructions}>
+          <Text style={styles.instructionsText}>ID: {id}</Text>
+        </View>
+      </ImageBackground>
     </View>
   );
 };
