@@ -1,6 +1,7 @@
 const fetch = require("node-fetch");
 const selectCube = require("./selectCube");
 const moveCubeAndResolveWinner = require("./moveCubeAndResolveWinner");
+const { ADVISOR_HOST } = require("../constants/advisor");
 
 const wait = seconds =>
   new Promise(resolve => setTimeout(resolve, seconds * 1000));
@@ -11,7 +12,7 @@ const getCoordsFromBody = ({ CoordsStart, CoordsEnd }) => ({
 });
 
 const fetchBestMove = ({ board, currentPlayer }) =>
-  fetch("http://advisor:8001/best-move", {
+  fetch(`${ADVISOR_HOST}/best-move`, {
     method: "post",
     body: JSON.stringify({
       Grid: board,
@@ -31,7 +32,7 @@ const playAiMove = async game => {
   const advice = await fetchBestMove(game);
   const selectedCube = advice.coordsStart;
   const gameWithSelectedCube = await selectCube(game.id, selectedCube);
-  await wait(1);
+  await wait(2);
   return await moveCubeAndResolveWinner(gameWithSelectedCube, advice.coordsEnd);
 };
 
