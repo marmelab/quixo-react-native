@@ -1,4 +1,4 @@
-# quixo-symfony
+# quixo-react
 
 Quixo Game Using NodeJS & react-native !
 
