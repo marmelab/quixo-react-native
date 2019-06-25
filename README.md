@@ -4,7 +4,7 @@ Quixo Game Using NodeJS & react-native !
 
 ## Install
 
-Install docker
+Install docker and Expo for the react native app
 
 ```
 make install
@@ -33,3 +33,7 @@ List all commands
 ```
 make help
 ```
+
+## Example
+
+![app-example](docs/example.gif)
