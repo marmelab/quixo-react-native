@@ -1,5 +1,11 @@
 import React, { useReducer, useEffect } from "react";
-import { StyleSheet, View, Text, ImageBackground } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  ImageBackground,
+  Animated
+} from "react-native";
 import { reducer, initialState } from "../game/reducer";
 import Cube from "../components/Cube";
 import Instructions from "../components/Instruction";
@@ -64,7 +70,7 @@ const isMyTurn = (myTeam, currentPlayer) => myTeam === currentPlayer;
 
 const GameScreen = ({ navigation }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { game, movables, myTeam } = state;
+  const { game, movables, myTeam, animated } = state;
   const {
     id: gameId,
     board,
@@ -82,6 +88,17 @@ const GameScreen = ({ navigation }) => {
   useEffect(fetchGame(id, isSolo, dispatch), []);
   useEffect(fetchMovables(id, dispatch), [currentPlayer]);
   useEffect(fetchMyTeam(id, dispatch), [id]);
+  useEffect(() => {
+    const animated = {};
+    board.map((row, x) => {
+      animated[x] = {};
+      row.map((value, y) => {
+        const animatedValue = new Animated.ValueXY({ x: y, y: x });
+        animated[x][y] = animatedValue;
+      });
+    });
+    dispatch({ type: "ANIMATED", payload: { animated } });
+  }, [board]);
 
   const handlePressCube = selectedCube
     ? ({ x, y }) => () => moveCube(id, dispatch)({ x, y })
@@ -90,6 +107,20 @@ const GameScreen = ({ navigation }) => {
   const isSelected = isSelectedCube(selectedCube);
   const isWinning = isWinningCube(winningLine);
 
+  const getAnimatedLayout = ({ x, y }) =>
+    animated[x] && animated[x][y] && animated[x][y].getLayout();
+  if (selectedCube) {
+    const { x, y } = selectedCube;
+    if (animated[x]) {
+      Object.keys(animated[x]).map(yAnimated => {
+        if (y < yAnimated) {
+          Animated.spring(animated[x][yAnimated], {
+            toValue: { x: -80, y: 0 }
+          }).start();
+        }
+      });
+    }
+  }
   return (
     <View style={styles.container}>
       <ImageBackground source={boardBackground} style={styles.boardBackground}>
@@ -98,14 +129,22 @@ const GameScreen = ({ navigation }) => {
           {board.map((row, x) => (
             <View key={`row-${x}`} style={styles.row}>
               {row.map((value, y) => (
-                <Cube
-                  key={`cube-${x}-${y}`}
-                  isMovable={isMovable({ x, y })}
-                  isSelected={isSelected({ x, y })}
-                  isWinning={isWinning({ x, y })}
-                  handlePress={handlePressCube({ x, y })}
-                  value={value}
-                />
+                <Animated.View
+                  key={`animated-${x}-${y}`}
+                  style={[
+                    { width: 80, height: 80 },
+                    getAnimatedLayout({ x, y })
+                  ]}
+                >
+                  <Cube
+                    key={`cube-${x}-${y}`}
+                    isMovable={isMovable({ x, y })}
+                    isSelected={isSelected({ x, y })}
+                    isWinning={isWinning({ x, y })}
+                    handlePress={handlePressCube({ x, y })}
+                    value={value}
+                  />
+                </Animated.View>
               ))}
             </View>
           ))}

@@ -21,7 +21,8 @@ export const initialState = {
     winningLine: []
   },
   movables: [],
-  myTeam: NEUTRAL_VALUE
+  myTeam: NEUTRAL_VALUE,
+  animated: {}
 };
 
 export const reducer = (state, action) => {
@@ -38,6 +39,9 @@ export const reducer = (state, action) => {
     case FETCH_TEAM_REPLY:
       const { team } = action.payload;
       return { ...state, myTeam: team };
+    case "ANIMATED":
+      const { animated } = action.payload;
+      return { ...state, animated };
     default:
       return state;
   }
