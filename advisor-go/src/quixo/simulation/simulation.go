@@ -96,6 +96,13 @@ func GetMinMaxMove(board game.Board) Move {
 			newOpponentBoard := game.GetBoardWithNoCubeSelected(newGrid, opponent)
 
 			myScore := scorer.GetBoardScore(newBoard)
+			if myScore == len(grid) {
+				return Move{
+					CoordsStart: movables[i].Coords,
+					CoordsEnd:   destinations[j],
+				}
+			}
+
 			myOpponentScore := scorer.GetBoardScore(newOpponentBoard)
 
 			minMaxScore := myScore - myOpponentScore
