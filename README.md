@@ -1,4 +1,4 @@
-# quixo-react
+# Quixo
 
 Quixo Game Using NodeJS & react-native !
 
