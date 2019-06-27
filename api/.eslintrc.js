@@ -3,18 +3,18 @@ module.exports = {
     browser: true,
     commonjs: true,
     es6: true,
-    jest: true,
+    jest: true
   },
-  extends: 'airbnb-base',
+  extends: "airbnb-base",
   globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
+    Atomics: "readonly",
+    SharedArrayBuffer: "readonly"
   },
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 2018
   },
   rules: {
-    'max-len': [2, 120, 4, { ignoreUrls: true }],
+    "max-len": [2, 120, 4, { ignoreUrls: true }]
   },
-  plugins: ['jest'],
+  plugins: ["jest"]
 };
