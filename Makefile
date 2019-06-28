@@ -17,14 +17,11 @@ install:
 	$(MAKE) api-install
 	$(MAKE) app-install
 
-api-start:
-	docker-compose up -d
-
 app-start:
 	cd quixo-react-native && npm run start
 
 start: ## Start the server + run the app
-	$(MAKE) api-start
+	docker-compose up -d
 	$(MAKE) app-start
 
 stop: ## Stop the server
@@ -48,3 +45,22 @@ test-go:
 test:
 	$(MAKE) test-api
 	$(MAKE) test-go
+
+prod-install:
+	cp -n api/.env.prod.dist api/.env
+	docker-compose run --rm \
+		api npm install
+
+prod-start:
+	docker-compose --file docker-compose.prod.yml up -d
+
+deploy:
+	git archive -o quixo.zip HEAD
+	scp -i $(key) quixo.zip $(ssh):~/quixo-api.zip
+	ssh -i $(key) $(ssh) ' \
+		unzip -uo ~/quixo-api.zip -d ~/quixo-api; \
+		rm -f quixo-api.zip; \
+		cd ~/quixo-api; \
+		make prod-install && make prod-start; \
+	'
+	rm -f quixo.zip
