@@ -37,7 +37,3 @@ services:
     command:
       ["/docker/wait-for-it.sh", "postgres:5433", "--", "npm", "run", "start"]
     restart: always
-networks:
-  default:
-    external:
-      name: network-quixo
