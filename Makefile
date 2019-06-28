@@ -2,11 +2,13 @@
 
 .DEFAULT_GOAL := help
 
+export NODE_ENV ?= development
+
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 api-install:
-	cp -n api/.env.dist api/.env
+	cp -n api/.$(NODE_ENV).env.dist api/.env
 	docker-compose run --rm \
 		api npm install
 
@@ -46,13 +48,8 @@ test:
 	$(MAKE) test-api
 	$(MAKE) test-go
 
-prod-install:
-	cp -n api/.env.prod.dist api/.env
-	docker-compose run --rm \
-		api npm install
-
-prod-start:
-	docker-compose --file docker-compose.prod.yml up -d
+server-start-production:
+	docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 
 deploy:
 	git archive -o quixo.zip HEAD
@@ -61,6 +58,6 @@ deploy:
 		unzip -uo ~/quixo-api.zip -d ~/quixo-api; \
 		rm -f quixo-api.zip; \
 		cd ~/quixo-api; \
-		make prod-install && make prod-start; \
+		NODE_ENV=PRODUCTION make api-install && make server-start-production; \
 	'
 	rm -f quixo.zip
