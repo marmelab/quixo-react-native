@@ -58,6 +58,6 @@ deploy:
 		unzip -uo ~/quixo-api.zip -d ~/quixo-api; \
 		rm -f quixo-api.zip; \
 		cd ~/quixo-api; \
-		NODE_ENV=PRODUCTION make api-install && make server-start-production; \
+		NODE_ENV=production make api-install && make server-start-production; \
 	'
 	rm -f quixo.zip
