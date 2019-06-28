@@ -1,0 +1,8 @@
+version: "3.2"
+
+services:
+  api:
+    ports:
+      - "80:80"
+    expose:
+      - "80"
