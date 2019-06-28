@@ -34,6 +34,13 @@ List all commands
 make help
 ```
 
+## Deploy
+
+Deploy app on unix server with docker & docker-compose
+```
+ssh="user@ip" key="pem-file" make deploy
+```
+
 ## Example
 
 ![app-example](docs/example.gif)
