@@ -6,6 +6,9 @@ const getMovables = require("./app/getMovables");
 const getDestinations = require("./app/getDestinations");
 const assignTeam = require("./app/assignTeam");
 const createNewGameVsAi = require("./app/createNewGameVsAi");
+const getLeaderboard = require("./app/getLeaderboard");
+const signup = require("./app/signup");
+const getPlayer = require("./app/getPlayer");
 
 const listen = app => {
   app.get("/", (req, res) => res.send("Hello :)"));
@@ -49,6 +52,23 @@ const listen = app => {
     const { id } = req.params;
     const team = await assignTeam(id);
     res.send(team);
+  });
+
+  app.get("/get-leaderboard", async (req, res) => {
+    const leaderboard = await getLeaderboard();
+    res.send(leaderboard);
+  });
+
+  app.post("/signup", async (req, res) => {
+    const { pseudo } = req.body;
+    const newPlayer = await signup(pseudo);
+    res.send(newPlayer);
+  });
+
+  app.get("/get-player/:pseudo", async (req, res) => {
+    const { pseudo } = req.params;
+    const player = await getPlayer(pseudo);
+    res.send(player);
   });
 };
 

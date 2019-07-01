@@ -1,4 +1,5 @@
 const { get, updatePlayer1, updatePlayer2 } = require("../database/game");
+const { incrementGame } = require("../database/player");
 const {
   CROSS_VALUE,
   CIRCLE_VALUE,
@@ -10,17 +11,16 @@ const getRandomTeam = () =>
 const getOpponentTeam = team =>
   team === CROSS_VALUE ? CIRCLE_VALUE : CROSS_VALUE;
 
-const assignTeam = async id => {
+const assignTeam = async (id, pseudo = "anonymous") => {
   const game = await get(id);
+  await incrementGame(pseudo);
   if (!game.player1) {
     const playerTeam = getRandomTeam();
-    const team = await updatePlayer1(id, playerTeam);
-    return { team };
+    return await updatePlayer1(id, { pseudo, team: playerTeam });
   }
   if (!game.player2) {
-    const playerTeam = getOpponentTeam(game.player1);
-    const team = await updatePlayer2(id, playerTeam);
-    return { team };
+    const playerTeam = getOpponentTeam(game.player1.team);
+    return await updatePlayer2(id, { pseudo, team: playerTeam });
   }
   return { team: NEUTRAL_VALUE };
 };
