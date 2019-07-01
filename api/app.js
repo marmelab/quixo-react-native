@@ -7,7 +7,9 @@ const { PORT } = require("./constants/api");
 const router = require("./router");
 
 const app = express();
-app.use(cors());
+app.use((req, res) =>
+  res.header("Access-Control-Allow-Origin", req.headers.origin)
+);
 app.use(bodyParser.json());
 
 router(app);
