@@ -1,4 +1,4 @@
-const flatten = require("lodash/flatten");
+const flatten = require("lodash.flatten");
 const { CROSS_VALUE, NEUTRAL_VALUE } = require("../constants/game");
 
 const getEmptyBoard = (rows, cols) =>
