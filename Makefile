@@ -12,6 +12,9 @@ api-install:
 	docker-compose run --rm \
 		api npm install
 
+api-start:
+	docker-compose up -d
+
 app-install:
 	cd quixo-react-native && npm i
 
