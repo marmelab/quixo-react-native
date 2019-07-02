@@ -23,7 +23,11 @@ const incrementGame = pseudo =>
   ]);
 
 const getRankedPlayers = () =>
-  db.query(`SELECT * FROM ${TABLE_NAME} ORDER BY won`).then(res => res.rows);
+  db
+    .query(
+      `SELECT * FROM ${TABLE_NAME} WHERE pseudo != 'anonymous' ORDER BY won DESC`
+    )
+    .then(res => res.rows);
 
 module.exports = {
   get,

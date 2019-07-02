@@ -48,9 +48,9 @@ const listen = app => {
     res.send(newGame);
   });
 
-  app.get("/assign-me-team/:id", async (req, res) => {
-    const { id } = req.params;
-    const team = await assignTeam(id);
+  app.get("/assign-me-team/:id/:pseudo", async (req, res) => {
+    const { id, pseudo } = req.params;
+    const team = await assignTeam(id, pseudo);
     res.send(team);
   });
 
