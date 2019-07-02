@@ -22,6 +22,22 @@ const save = game =>
     })
     .then(res => toEntity(res.rows[0]));
 
+const saveWithPlayers = (game, player1, player2) =>
+  db
+    .query({
+      text: `INSERT INTO ${TABLE_NAME}(board, rows, cols, current_player, solo, player1, player2) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+      values: [
+        JSON.stringify(game.board),
+        game.rows,
+        game.cols,
+        game.currentPlayer,
+        game.solo,
+        JSON.stringify(player1),
+        JSON.stringify(player2)
+      ]
+    })
+    .then(res => toEntity(res.rows[0]));
+
 const updateSelectedCube = (id, selectedCube) =>
   db
     .query({
@@ -78,5 +94,6 @@ module.exports = {
   updatePlayer1,
   updatePlayer2,
   updateBoardAndWinner,
-  getCurrentGames
+  getCurrentGames,
+  saveWithPlayers
 };

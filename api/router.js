@@ -10,6 +10,7 @@ const getLeaderboard = require("./app/getLeaderboard");
 const signup = require("./app/signup");
 const getPlayer = require("./app/getPlayer");
 const getCurrentGamesForPlayer = require("./app/getCurrentGamesForPlayer");
+const createNewGameWithFriends = require("./app/createNewGameWithFriends");
 
 const listen = app => {
   app.get("/", (req, res) => res.send("Hello :)"));
@@ -76,6 +77,13 @@ const listen = app => {
     const { pseudo } = req.params;
     const games = await getCurrentGamesForPlayer(pseudo);
     res.send(games);
+  });
+
+  app.post("/create-game-friends", async (req, res) => {
+    const { pseudo1, pseudo2 } = req.body;
+    const game = await createNewGameWithFriends(pseudo1, pseudo2);
+
+    res.send(game);
   });
 };
 
