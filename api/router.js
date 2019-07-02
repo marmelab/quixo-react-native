@@ -9,6 +9,7 @@ const createNewGameVsAi = require("./app/createNewGameVsAi");
 const getLeaderboard = require("./app/getLeaderboard");
 const signup = require("./app/signup");
 const getPlayer = require("./app/getPlayer");
+const getCurrentGamesForPlayer = require("./app/getCurrentGamesForPlayer");
 
 const listen = app => {
   app.get("/", (req, res) => res.send("Hello :)"));
@@ -69,6 +70,12 @@ const listen = app => {
     const { pseudo } = req.params;
     const player = await getPlayer(pseudo);
     res.send(player);
+  });
+
+  app.get("/get-games/:pseudo", async (req, res) => {
+    const { pseudo } = req.params;
+    const games = await getCurrentGamesForPlayer(pseudo);
+    res.send(games);
   });
 };
 

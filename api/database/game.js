@@ -62,6 +62,14 @@ const updateBoardAndWinner = (id, board, winner, winningLine) =>
     })
     .then(res => toEntity(res.rows[0]));
 
+const getCurrentGames = pseudo =>
+  db
+    .query(
+      `SELECT * FROM ${TABLE_NAME} WHERE winner IS NULL and (player1 ->> 'pseudo' = $1 or player2 ->> 'pseudo' = $1)`,
+      [pseudo]
+    )
+    .then(res => res.rows.map(game => toEntity(game)));
+
 module.exports = {
   get,
   save,
@@ -69,5 +77,6 @@ module.exports = {
   updateBoardAndPlayer,
   updatePlayer1,
   updatePlayer2,
-  updateBoardAndWinner
+  updateBoardAndWinner,
+  getCurrentGames
 };
