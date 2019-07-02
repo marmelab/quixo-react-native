@@ -2,7 +2,5 @@ version: "3.2"
 
 services:
   api:
-    ports:
-      - "80:80"
-    expose:
-      - "80"
+    command:
+      ["/docker/wait-for-it.sh", "postgres:5433", "--", "npm", "run", "start-prod"]

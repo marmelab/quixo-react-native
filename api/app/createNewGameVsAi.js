@@ -10,7 +10,7 @@ const createNewGameVsAi = async () => {
   const game = newGameVsAi();
   const newGame = await save(game);
   const iaTeam = getRandomTeam();
-  await updatePlayer1(newGame.id, iaTeam);
+  await updatePlayer1(newGame.id, { pseudo: "ia", team: iaTeam });
   if (newGame.currentPlayer === iaTeam) {
     playAiMove(newGame);
   }

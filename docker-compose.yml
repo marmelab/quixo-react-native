@@ -22,6 +22,8 @@ services:
     command: CompileDaemon -directory="./src/quixo/" -command="./src/quixo/quixo"
   api:
     image: node:12.4.0-stretch
+    depends_on:
+        - postgres
     ports:
       - "3001:3001"
     expose:
@@ -29,11 +31,9 @@ services:
     volumes:
       - ./api:/api
       - ./docker/wait-for-it.sh:/docker/wait-for-it.sh
-    depends_on:
-      - postgres
-      - advisor
     env_file: ./api/.env
     working_dir: /api
     command:
-      ["/docker/wait-for-it.sh", "postgres:5433", "--", "npm", "run", "start"]
+      ["/docker/wait-for-it.sh", "localhost:5433", "--", "npm", "run", "start"]
     restart: always
+    network_mode: host
