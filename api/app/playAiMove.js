@@ -12,7 +12,7 @@ const getCoordsFromBody = ({ CoordsStart, CoordsEnd }) => ({
 });
 
 const fetchBestMove = ({ board, currentPlayer }) =>
-  fetch(`${ADVISOR_HOST}/best-move`, {
+  fetch(`${ADVISOR_HOST}/min-max-move`, {
     method: "post",
     body: JSON.stringify({
       Grid: board,

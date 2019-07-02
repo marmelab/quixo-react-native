@@ -80,6 +80,45 @@ func getAllMoves(board game.Board) []Move {
 	return moves
 }
 
+func GetMinMaxMove(board game.Board) Move {
+	movables := game.GetMovablesCubes(board)
+	bestMove := Move{}
+	bestScore := 0
+	grid := board.Grid
+	player := board.Player
+	opponent := getOpponentPlayer(player)
+
+	for i := 0; i < len(movables); i++ {
+		destinations := game.GetAvailablesDestinations(grid, movables[i].Coords)
+		for j := 0; j < len(destinations); j++ {
+			newGrid := game.MoveCube(board, movables[i].Coords, destinations[j])
+			newBoard := game.GetBoardWithNoCubeSelected(newGrid, player)
+			newOpponentBoard := game.GetBoardWithNoCubeSelected(newGrid, opponent)
+
+			myScore := scorer.GetBoardScore(newBoard)
+			if myScore == len(grid) {
+				return Move{
+					CoordsStart: movables[i].Coords,
+					CoordsEnd:   destinations[j],
+				}
+			}
+
+			myOpponentScore := scorer.GetBoardScore(newOpponentBoard)
+
+			minMaxScore := myScore - myOpponentScore
+
+			if minMaxScore > bestScore || (i == 0 && j == 0) {
+				bestScore = minMaxScore
+				bestMove = Move{
+					CoordsStart: movables[i].Coords,
+					CoordsEnd:   destinations[j],
+				}
+			}
+		}
+	}
+	return bestMove
+}
+
 // GetBestMoveForPlayer return the best move for the player
 func GetBestMoveForPlayer(board game.Board) Move {
 	return getBestMove(board, false)

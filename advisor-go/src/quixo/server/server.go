@@ -16,7 +16,14 @@ func Start() {
 	http.HandleFunc("/best-move", bestMove)
 	http.HandleFunc("/worst-move", worstMove)
 	http.HandleFunc("/opponent-lose-move", makeOpponentLoseMove)
+	http.HandleFunc("/min-max-move", makeOpponentLoseMove)
 	http.ListenAndServe(":"+strconv.Itoa(port), nil)
+}
+
+func minMaxMove(w http.ResponseWriter, r *http.Request) {
+	board := getBoardFromRequest(r)
+	bestMove := simulation.GetMinMaxMove(board)
+	sendResponse(w, bestMove)
 }
 
 func bestMove(w http.ResponseWriter, r *http.Request) {
