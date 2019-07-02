@@ -22,6 +22,8 @@ services:
     command: CompileDaemon -directory="./src/quixo/" -command="./src/quixo/quixo"
   api:
     image: node:12.4.0-stretch
+    depends_on:
+        - postgres
     ports:
       - "3001:3001"
     expose:
